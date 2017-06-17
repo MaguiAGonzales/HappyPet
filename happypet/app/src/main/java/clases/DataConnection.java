@@ -62,7 +62,7 @@ public class DataConnection extends AppCompatActivity {
         try {
             String protocolo = "http://";
             String ip = "192.168.0.102";
-            URL obj = new URL( protocolo + ip + ":8081/mascotas/funciones/admin_mascota.php");
+            URL obj = new URL( protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php");
             System.out.println("Funcion: " + funcion);
             if (funcion.equals("setImage")){
                 data = "f=" + URLEncoder.encode(funcion, "UTF-8")
