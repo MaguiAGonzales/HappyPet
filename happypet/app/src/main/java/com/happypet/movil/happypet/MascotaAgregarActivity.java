@@ -85,7 +85,7 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
 
                 dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, adoptado);
 
-                me.finish();
+//                me.finish();
             }
         });
 

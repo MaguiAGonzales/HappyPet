@@ -61,7 +61,7 @@ public class DataConnection extends AppCompatActivity {
         StringBuffer response = null;
         try {
             String protocolo = "http://";
-            String ip = "192.168.0.102";
+            String ip = "192.168.1.34";
             URL obj = new URL( protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php");
             System.out.println("Funcion: " + funcion);
             if (funcion.equals("setImage")){
@@ -74,7 +74,7 @@ public class DataConnection extends AppCompatActivity {
                         + "&salud=" + URLEncoder.encode(salud, "UTF-8")
                         + "&adoptado=" + URLEncoder.encode(adoptado, "UTF-8")
                         + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8");
-                System.out.println("datos obtenerdatos -------- >    " + data);
+//                System.out.println("datos obtenerdatos -------- >    " + data);
             }
 
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -131,6 +131,7 @@ public class DataConnection extends AppCompatActivity {
     private void actividad(){
         if(ok){
             Toast.makeText(context, "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
+            this.context.finish();
         }
 
         if(funcion.equals("insert")){
