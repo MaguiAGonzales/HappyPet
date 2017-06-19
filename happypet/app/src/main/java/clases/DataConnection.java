@@ -1,10 +1,13 @@
 package clases;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaCodec;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.happypet.movil.happypet.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +55,7 @@ public class DataConnection extends AppCompatActivity {
         this.adoptado = adoptado;
 
         this.ok = false;
-        msg = "";
+        this.msg = "";
 
         new GetAndSet().execute();
     }
@@ -61,8 +64,11 @@ public class DataConnection extends AppCompatActivity {
         StringBuffer response = null;
         try {
             String protocolo = "http://";
-            String ip = "192.168.1.34";
-            URL obj = new URL( protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php");
+            String ip = "192.168.0.103";
+            ip = this.context.getResources().getString(R.string.ipservidor);
+            String rutaUrl = protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php";
+
+            URL obj = new URL( rutaUrl);
             System.out.println("Funcion: " + funcion);
             if (funcion.equals("setImage")){
                 data = "f=" + URLEncoder.encode(funcion, "UTF-8")
@@ -72,7 +78,7 @@ public class DataConnection extends AppCompatActivity {
                         + "&anio=" + URLEncoder.encode(anio, "UTF-8")
                         + "&particularidades=" + URLEncoder.encode(particularidades, "UTF-8")
                         + "&salud=" + URLEncoder.encode(salud, "UTF-8")
-                        + "&adoptado=" + URLEncoder.encode(adoptado, "UTF-8")
+                        + "&adoptado=" + URLEncoder.encode(this.adoptado, "UTF-8")
                         + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8");
 //                System.out.println("datos obtenerdatos -------- >    " + data);
             }
@@ -128,11 +134,15 @@ public class DataConnection extends AppCompatActivity {
         }
         return false;
     }
+
     private void actividad(){
-        if(ok){
-            Toast.makeText(context, "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
-            this.context.finish();
-        }
+
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+
+        Intent intent=new Intent();
+        setResult(2,intent);
+
+        context.finish();
 
         if(funcion.equals("insert")){
             Toast.makeText(context, "Imagen Insertada al servidor ", Toast.LENGTH_LONG).show();
@@ -143,6 +153,7 @@ public class DataConnection extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+
             if(filtrarDatos()){
                 context.runOnUiThread(new Runnable(){
                     @Override

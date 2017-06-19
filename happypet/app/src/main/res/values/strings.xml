@@ -15,4 +15,5 @@
     </string>
     <string name="title_activity_mismascotas">Mis Mascotas</string>
     <string name="title_activity_mascota_agregar">Agregar Mascota</string>
+    <string name="ipservidor">192.168.0.103</string>
 </resources>

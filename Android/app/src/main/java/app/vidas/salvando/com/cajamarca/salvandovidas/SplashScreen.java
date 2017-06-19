@@ -19,7 +19,7 @@ public class SplashScreen extends Activity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(SplashScreen.this, RegistrarMascotas.class);
+                Intent intent = new Intent(SplashScreen.this, InicioRegistro.class);
                 startActivity(intent);
 
                 finish();
