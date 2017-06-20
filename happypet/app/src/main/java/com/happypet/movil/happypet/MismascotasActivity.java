@@ -88,7 +88,7 @@ public class MismascotasActivity extends AppCompatActivity {
 
                 new JsonTask().execute(new URL(url) );
             } else {
-                Toast.makeText(this, "Necesita conexión a internet…", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
             }
 
         } catch (MalformedURLException e) {
@@ -99,7 +99,7 @@ public class MismascotasActivity extends AppCompatActivity {
     public class JsonTask extends AsyncTask<URL, Void, List<Mascota>> {
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(MismascotasActivity.this, "", "Espere por favor...");
+            progress = ProgressDialog.show(MismascotasActivity.this, "", "Cargando la lista de Mascotas...");
         }
 
         @Override

@@ -40,6 +40,7 @@ public class DataConnection extends AppCompatActivity {
     Boolean ok;
     String msg;
 
+    Intent intenPadre;
 
     public DataConnection(Activity context, String funcion, String encodedImage,  String nombre, String tipo, String sexo, String anio, String particularidades, String salud, String adoptado){
         this.context = context;
@@ -139,8 +140,11 @@ public class DataConnection extends AppCompatActivity {
 
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
 
-        Intent intent=new Intent();
-        setResult(2,intent);
+//        if(ok){
+            setResult(2, intenPadre);
+//        }else{
+//            setResult(RESULT_CANCELED);
+//        }
 
         context.finish();
 

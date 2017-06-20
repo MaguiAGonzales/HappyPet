@@ -41,6 +41,8 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
 
     static MascotaAgregarActivity me;
 
+    Intent intentPadre;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
