@@ -80,10 +80,11 @@ public class MismascotasActivity extends AppCompatActivity {
                 String filtroInicio = "?f=listar";
                 filtro = filtro.equals("")?"":"?nombre=" + filtro;
                 String protocolo = "http://";
-                String ip = "192.168.0.103";
-                ip = getResources().getString(R.string.ipservidor);
+                String ip = getResources().getString(R.string.ipweb);
+                String puerto = getResources().getString(R.string.puertoweb);
+                puerto = puerto.equals("") ? "" : ":" + puerto;
 
-                String url = protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php" +filtroInicio + filtro;
+                String url = protocolo + ip + puerto +  "/happypet-web/funciones/admin_mascota.php" +filtroInicio + filtro;
                 System.out.println("direccion ------      " + url);
 
                 new JsonTask().execute(new URL(url) );

@@ -65,9 +65,10 @@ public class DataConnection extends AppCompatActivity {
         StringBuffer response = null;
         try {
             String protocolo = "http://";
-            String ip = "192.168.0.103";
-            ip = this.context.getResources().getString(R.string.ipservidor);
-            String rutaUrl = protocolo + ip + ":8081/happypet-web/funciones/admin_mascota.php";
+            String ip = this.context.getResources().getString(R.string.ipweb);
+            String puerto = this.context.getResources().getString(R.string.puertoweb);
+            puerto = puerto.equals("") ? "" : ":" + puerto;
+            String rutaUrl = protocolo + ip + puerto + "/happypet-web/funciones/admin_mascota.php";
 
             URL obj = new URL( rutaUrl);
             System.out.println("Funcion: " + funcion);
