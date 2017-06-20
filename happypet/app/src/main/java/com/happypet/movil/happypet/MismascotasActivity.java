@@ -44,8 +44,6 @@ public class MismascotasActivity extends AppCompatActivity {
         lista = (ListView) findViewById(R.id.lvMascotas);
         cargar("");
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btnAgregarMascota);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
