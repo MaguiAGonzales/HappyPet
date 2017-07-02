@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mascotas"
+            android:icon="@drawable/ic_menu_mascotas"
+            android:title="Mis Mascotas" />
+        <item
+            android:id="@+id/nav_adopciones"
+            android:icon="@drawable/ic_menu_adopciones"
+            android:title="Adopciones" />
+        <item
+            android:id="@+id/nav_denuncias"
+            android:icon="@drawable/ic_menu_denuncias"
+            android:title="Denuncias" />
+        <item
+            android:id="@+id/nav_alertas"
+            android:icon="@drawable/ic_menu_volumen"
+            android:title="Alertas" />
+        <item
+            android:id="@+id/nav_eventos"
+            android:icon="@drawable/ic_menu_eventos"
+            android:title="Eventos" />
+        <item
+            android:id="@+id/nav_terminos"
+            android:icon="@drawable/ic_menu_condiciones"
+            android:title="Términos y Condiciones" />
+        <item
+            android:id="@+id/nav_micuenta"
+            android:icon="@drawable/ic_menu_usuario"
+            android:title="Mi Cuenta" />
+        <item
+            android:id="@+id/nav_cerrar"
+            android:icon="@drawable/ic_menu_cerrar"
+            android:title="Cerrar Sesión" />
+    </group>
+
+</menu>

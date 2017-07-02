@@ -15,6 +15,15 @@
     </string>
     <string name="title_activity_mismascotas">Mis Mascotas</string>
     <string name="title_activity_mascota_agregar">Agregar Mascota</string>
-    <string name="ipweb">192.168.0.102</string>
+    <string name="ipweb">192.168.0.9</string>
     <string name="puertoweb">8081</string>
+    <string name="title_activity_menu_lateral">Happy Pet</string>
+
+    <string name="navigation_drawer_open">Abrir Menu</string>
+    <string name="navigation_drawer_close">Cerrar Menu</string>
+
+    <string name="action_settings">Configuración</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

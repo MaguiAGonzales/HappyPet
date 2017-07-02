@@ -25,6 +25,8 @@ import java.io.ByteArrayOutputStream;
 import clases.DataConnection;
 
 public class MascotaAgregarActivity extends AppCompatActivity implements View.OnClickListener {
+    String USUARIO_ID;
+
     String[] tipos = {"Perro", "Gato"};
     private Spinner cbTipo;
 
@@ -47,6 +49,9 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mascota_agregar);
+
+        Intent myIntent = getIntent();
+        USUARIO_ID = myIntent.getStringExtra("id");
 
         img = (ImageView) findViewById(R.id.imageView);
         img.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +90,7 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
                 String salud = tbSalud.getText().toString();
                 String adoptado = rbAdoptadoSI.isChecked() ? "1":"0";
 
-                dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, adoptado);
+                dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, adoptado, USUARIO_ID);
             }
         });
 

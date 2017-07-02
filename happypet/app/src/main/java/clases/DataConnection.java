@@ -1,6 +1,8 @@
 package clases;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaCodec;
 import android.os.AsyncTask;
@@ -24,12 +26,15 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import adaptadores.adaptadorMascotasDisponibles;
+
 
 public class DataConnection extends AppCompatActivity {
-    String nombre, tipo, sexo, anio, particularidades, salud, adoptado;
+    String nombre, tipo, sexo, anio, particularidades, salud, adoptado, idUsuario;
 
     String funcion, encodedImage, data, image, cargarDatos;
     Activity context;
@@ -41,8 +46,9 @@ public class DataConnection extends AppCompatActivity {
     String msg;
 
     Intent intenPadre;
+    ProgressDialog progress;
 
-    public DataConnection(Activity context, String funcion, String encodedImage,  String nombre, String tipo, String sexo, String anio, String particularidades, String salud, String adoptado){
+    public DataConnection(Activity context, String funcion, String encodedImage,  String nombre, String tipo, String sexo, String anio, String particularidades, String salud, String adoptado, String idUsuario){
         this.context = context;
         this.funcion = funcion;
         this.encodedImage = encodedImage;
@@ -54,14 +60,16 @@ public class DataConnection extends AppCompatActivity {
         this.particularidades = particularidades;
         this.salud = salud;
         this.adoptado = adoptado;
+        this.idUsuario = idUsuario;
 
         this.ok = false;
         this.msg = "";
 
-        new GetAndSet().execute();
+        new GetAndSet(this.context).execute();
     }
 
     private String obtenerDatos(){
+
         StringBuffer response = null;
         try {
             String protocolo = "http://";
@@ -81,7 +89,9 @@ public class DataConnection extends AppCompatActivity {
                         + "&particularidades=" + URLEncoder.encode(particularidades, "UTF-8")
                         + "&salud=" + URLEncoder.encode(salud, "UTF-8")
                         + "&adoptado=" + URLEncoder.encode(this.adoptado, "UTF-8")
-                        + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8");
+                        + "&adoptable=0"
+                        + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8")
+                        + "&id_usuario=" + this.idUsuario;
 //                System.out.println("datos obtenerdatos -------- >    " + data);
             }
 
@@ -138,6 +148,7 @@ public class DataConnection extends AppCompatActivity {
     }
 
     private void actividad(){
+        progress.dismiss();
 
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
 
@@ -155,6 +166,16 @@ public class DataConnection extends AppCompatActivity {
     }
 
     class GetAndSet extends AsyncTask<String, String, String>{
+        private Context myContext;
+
+        public GetAndSet(Context context){
+            this.myContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(this.myContext, "", "Cargando Mascotas Disponibles...");
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -169,6 +190,12 @@ public class DataConnection extends AppCompatActivity {
             }
             return null;
         }
+
+//        @Override
+//        protected void onPostExecute() {
+//            if (progress.isShowing()) { progress.dismiss(); }
+//
+//        }
     }
 
 

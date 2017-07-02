@@ -1,21 +1,26 @@
-package com.happypet.movil.happypet;
+package fragmentos;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.happypet.movil.happypet.MascotaAgregarActivity;
+import com.happypet.movil.happypet.MismascotasActivity;
+import com.happypet.movil.happypet.R;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -29,7 +34,22 @@ import adaptadores.adaptadorMascotas;
 import clases.Mascota;
 import parseadores.JsonMascotaParser;
 
-public class MismascotasActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link MisMascotasFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ */
+public class MisMascotasFragment extends Fragment {
+
+    private OnFragmentInteractionListener mListener;
+
+    public MisMascotasFragment() {
+        // Required empty public constructor
+    }
+
+    String USUARIO_ID;
+
     ListView lista;
     ArrayAdapter adaptador;
     HttpURLConnection con;
@@ -38,22 +58,31 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
     private SwipeRefreshLayout swipeContainer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mismascotas);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View me =  inflater.inflate(R.layout.fragment_mis_mascotas, container, false);
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.srlContainer);
+        USUARIO_ID = getArguments().getString("id");
 
-        lista = (ListView) findViewById(R.id.lvMascotas);
+        swipeContainer = (SwipeRefreshLayout) me.findViewById(R.id.srlContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                cargar("");
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        lista = (ListView) me.findViewById(R.id.lvMascotas);
         cargar("");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btnAgregarMascota);
+        FloatingActionButton fab = (FloatingActionButton) me.findViewById(R.id.btnAgregarMascota);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (view.getContext(), MascotaAgregarActivity.class );
+                intent.putExtra("id", USUARIO_ID);
                 startActivityForResult(intent, 0);
 
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -61,27 +90,27 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
             }
         });
 
-        swipeContainer.setOnRefreshListener(this);
+        return me;
+
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
         if(requestCode==0){
             cargar("");
         }
     }
 
-    private void cargar (String filtro){
+    public void cargar (String filtro){
         try {
-            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.isConnected()) {
-                String filtroInicio = "?f=listar";
-                filtro = filtro.equals("")?"":"?nombre=" + filtro;
+                String filtroInicio = "?f=listar&id_usuario=" + USUARIO_ID;
+                filtro = filtro.equals("")?"":"&nombre=" + filtro;
                 String protocolo = "http://";
                 String ip = getResources().getString(R.string.ipweb);
                 String puerto = getResources().getString(R.string.puertoweb);
@@ -92,7 +121,7 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
 
                 new JsonTask().execute(new URL(url) );
             } else {
-                Toast.makeText(this, "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
             }
 
         } catch (MalformedURLException e) {
@@ -100,16 +129,10 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
         }
     }
 
-    @Override
-    public void onRefresh() {
-        cargar("");
-        swipeContainer.setRefreshing(false);
-    }
-
     public class JsonTask extends AsyncTask<URL, Void, List<Mascota>> {
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(MismascotasActivity.this, "", "Cargando la lista de Mascotas...");
+            progress = ProgressDialog.show(getActivity(), "", "Cargando la lista de Mascotas...");
         }
 
         @Override
@@ -154,15 +177,12 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
 
         @Override
         protected void onPostExecute(List<Mascota> mascotas) {
-            /*
-            Asignar los objetos de Json parseados al adaptador
-             */
             if(mascotas!=null) {
-                adaptador = new adaptadorMascotas(getBaseContext(), mascotas);
+                adaptador = new adaptadorMascotas(getActivity().getBaseContext(), mascotas);
                 lista.setAdapter(adaptador);
             }else{
                 Toast.makeText(
-                        getBaseContext(),
+                        getActivity().getBaseContext(),
                         "Ocurrió un error de Parsing Json en las Mascotas",
                         Toast.LENGTH_SHORT)
                         .show();
@@ -170,5 +190,38 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
             if (progress.isShowing()) { progress.dismiss(); }
 
         }
+    }
+
+
+
+
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

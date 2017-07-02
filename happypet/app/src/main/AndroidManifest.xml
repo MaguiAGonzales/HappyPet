@@ -32,22 +32,24 @@
         <activity
             android:name=".MismascotasActivity"
             android:label="@string/title_activity_mismascotas"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MascotaAgregarActivity"
             android:label="@string/title_activity_mascota_agregar" />
-
         <activity android:name=".MainActivity" />
-
-        <activity android:name=".SplashScreen" android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen" >
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MenuLateralActivity"
+            android:label="@string/title_activity_menu_lateral"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

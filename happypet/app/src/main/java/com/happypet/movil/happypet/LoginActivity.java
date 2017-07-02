@@ -4,9 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -30,15 +29,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+    public String RPTA_msg = "";
+    public JSONObject RPTA_usuario = null;
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -69,9 +74,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -95,48 +99,76 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
-
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
+
+
+
+//    --------------
+    public String enviarDatosGET(String usu, String pas){
+        String protocolo = "http://";
+        String ip = getResources().getString(R.string.ipweb);
+        String puerto = getResources().getString(R.string.puertoweb);
+        puerto = puerto.equals("") ? "" : ":" + puerto;
+        String funcion = "?f=2";
+        String datos = "&usuario=" + usu + "&clave=" + pas;
+
+        String ruta = protocolo + ip + puerto +  "/happypet-web/funciones/admin_usuario.php" + funcion + datos;
+
+        URL url = null;
+        String linea = "";
+        int respuesta = 0;
+        StringBuilder result = null;
+
+        try{
+            url = new URL(ruta);
+
+            HttpURLConnection conection = (HttpURLConnection)url.openConnection();
+            respuesta = conection.getResponseCode();
+
+            result = new StringBuilder();
+
+            if(respuesta == HttpURLConnection.HTTP_OK){
+                InputStream in = new BufferedInputStream(conection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                while((linea = reader.readLine()) != null){
+                    result.append(linea);
+                }
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            System.out.println("URL mal formateada");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(result.toString());
+        return result.toString();
+    }
+
+    public int obtDatosJSON(String response){
+        int res = 0;
+        try {
+//            JSONArray json = new JSONArray(response);
+//            if (json.length() > 0 ){
+//                res = 1;
+//            }
+            JSONObject jsonRpta = new JSONObject(response);
+            Boolean ok = jsonRpta.getBoolean("success");
+            RPTA_msg = jsonRpta.getString("msg");
+            System.out.println(ok.toString() + "      ------      " + RPTA_msg);
+            RPTA_usuario = jsonRpta.getJSONObject("data");
+
+            return ok?1:0;
+        }catch (Exception e){
+            System.out.println("error al Parsear JSON");
+        }
+        return res;
+    }
+//    --------------
+
 
 
     /**
@@ -201,7 +233,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 3;
+        return password.length() > 2;
     }
 
     /**
@@ -310,25 +342,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+//            // TODO: attempt authentication against a network service.
+//
+//            try {
+//                // Simulate network access.
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                return false;
+//            }
+//
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+//
+//            // TODO: register the new account here.
+//            return true;
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
+            final String resultado = enviarDatosGET(mEmail,mPassword);
+            return obtDatosJSON(resultado) == 1 ? true : false;
         }
 
         @Override
@@ -338,10 +373,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
 //                finish();
-                Intent intent = new Intent(LoginActivity.this, MismascotasActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(LoginActivity.this, MismascotasActivity.class);
+                try{
+                    Intent intent = new Intent(LoginActivity.this, MenuLateralActivity.class);
+                    intent.putExtra("id",RPTA_usuario.getString("id"));
+                    intent.putExtra("foto",RPTA_usuario.getString("foto"));
+                    intent.putExtra("nombre",RPTA_usuario.getString("nombre") + " " + RPTA_usuario.getString("apellidos"));
+                    intent.putExtra("correo",RPTA_usuario.getString("correo"));
+                    startActivity(intent);
+                }catch (Exception e){
+                    System.out.println("Error al leer el JSON RPTA_usuario");
+                }
+
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(RPTA_msg);
                 mPasswordView.requestFocus();
             }
         }
