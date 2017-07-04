@@ -28,6 +28,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -35,6 +36,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -138,13 +140,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
 
+
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
             System.out.println("URL mal formateada");
+        } catch(ConnectException e){
+            e.printStackTrace();
+            Toast.makeText(this, "No se puede tener Acceso al Servidor " + ip + puerto , Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(result.toString());
         return result.toString();
     }
 
@@ -361,9 +367,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //
 //            // TODO: register the new account here.
 //            return true;
+            Boolean rpta = false;
+            try{
+                final String resultado = enviarDatosGET(mEmail,mPassword);
+                rpta = obtDatosJSON(resultado) == 1 ? true : false;
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("no se puede conectar: ");
+                RPTA_msg = "No se puede acceder al Servidor";
+            }
 
-            final String resultado = enviarDatosGET(mEmail,mPassword);
-            return obtDatosJSON(resultado) == 1 ? true : false;
+            return rpta;
         }
 
         @Override

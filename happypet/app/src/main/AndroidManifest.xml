@@ -48,8 +48,19 @@
         </activity>
         <activity
             android:name=".MenuLateralActivity"
+            android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_menu_lateral"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MascotaDetalleActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="Detalle de Adopción"
+            android:parentActivityName=".MenuLateralActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.MenuLateralActivity" />
+        </activity>
+        <activity android:name=".UsuarioDetalle"></activity>
     </application>
 
 </manifest>

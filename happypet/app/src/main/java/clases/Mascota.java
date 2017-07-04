@@ -1,6 +1,11 @@
 package clases;
 
 
+import android.icu.util.Calendar;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Mascota {
     private int idMascota;
     private String nombre;
@@ -115,5 +120,12 @@ public class Mascota {
 
     public void setUsuarioId(int usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public int getEdad(){
+        int anioActual = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) ;
+//        Calendar calendar = Calendar.getInstance();
+//        int anioActual = calendar.get(Calendar.YEAR);
+        return anioActual - Integer.parseInt(this.anio);
     }
 }

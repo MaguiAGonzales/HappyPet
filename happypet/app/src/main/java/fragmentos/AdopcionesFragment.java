@@ -2,21 +2,28 @@ package fragmentos;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.happypet.movil.happypet.MascotaDetalleActivity;
 import com.happypet.movil.happypet.MismascotasActivity;
 import com.happypet.movil.happypet.R;
 
@@ -25,7 +32,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import adaptadores.adaptadorMascotas;
@@ -99,6 +109,27 @@ public class AdopcionesFragment extends Fragment {
 
         listaDisponibles = (ListView) me.findViewById(R.id.lvMascotasDisponibles);
         cargarAdopcionesDisponibles();
+
+        listaDisponibles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
+                Mascota mascotaSel = (Mascota) pariente.getItemAtPosition(posicion);
+
+                Intent intent = new Intent(getContext(), MascotaDetalleActivity.class);
+                intent.putExtra("idUsuario", USUARIO_ID);
+
+                intent.putExtra("id", mascotaSel.getIdMascota());
+                intent.putExtra("foto", mascotaSel.getImagen());
+                intent.putExtra("nombre", mascotaSel.getNombre());
+                intent.putExtra("tipo", mascotaSel.getTipo());
+                intent.putExtra("sexo", mascotaSel.getSexo());
+                intent.putExtra("particularidad", mascotaSel.getParticularidades());
+                intent.putExtra("salud", mascotaSel.getSalud());
+                intent.putExtra("edad", String.valueOf(mascotaSel.getEdad()) );
+                startActivity(intent);
+
+            }
+        });
 
         // ------------ TAB MIS ADOPCIONES -------------
         scMisAdopciones = (SwipeRefreshLayout) me.findViewById(R.id.srlMisAdopciones);
