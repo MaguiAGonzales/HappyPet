@@ -46,6 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MenuLateralActivity"
             android:configChanges="screenSize|orientation"
@@ -61,6 +62,15 @@
                 android:value="com.happypet.movil.happypet.MenuLateralActivity" />
         </activity>
         <activity android:name=".UsuarioDetalle"></activity>
+        <activity android:name=".AgregarMascotaEncontrada" />
+        <activity android:name=".AgregarMascotaExtraviada" />
+        <activity android:name=".DatosAdopcion" />
+        <activity android:name=".MiCuenta" />
+        <activity android:name=".ProcesoAdopcion" />
+        <activity android:name=".RegistrarDenuncia" />
+        <activity android:name=".TerminosYCondicionesAdopcion" />
+        <activity android:name=".TerminosyCondicionesCuenta" />
+        <activity android:name=".TestAdopcion"></activity>
     </application>
 
 </manifest>

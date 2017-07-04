@@ -21,5 +21,4 @@
     android:clickable="true"
     android:focusable="false"
     android:touchscreenBlocksFocus="true" />
-
 </android.support.v4.widget.SwipeRefreshLayout>

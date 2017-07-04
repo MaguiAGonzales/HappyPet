@@ -130,7 +130,6 @@ public class MenuLateralActivity extends AppCompatActivity
         } else if (id == R.id.nav_micuenta) {
 
         } else if (id == R.id.nav_cerrar) {
-            FragmentTransaction = true;
             Intent intent = new Intent (this, LoginActivity.class );
             startActivity(intent);
             return true;
