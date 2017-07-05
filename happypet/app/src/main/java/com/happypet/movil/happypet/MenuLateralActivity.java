@@ -20,12 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fragmentos.AdopcionesFragment;
+import fragmentos.MiCuentaFragment;
 import fragmentos.MisMascotasFragment;
+import fragmentos.TerminosCuentaFragment;
 
 public class MenuLateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AdopcionesFragment.OnFragmentInteractionListener,
-        MisMascotasFragment.OnFragmentInteractionListener{
+        MisMascotasFragment.OnFragmentInteractionListener,
+        MiCuentaFragment.OnFragmentInteractionListener,
+        TerminosCuentaFragment.OnFragmentInteractionListener{
 
     TextView tbNombreUsuario, tbCorreoUsuario;
     ImageView imgfotoUsuario;
@@ -126,9 +130,11 @@ public class MenuLateralActivity extends AppCompatActivity
         } else if (id == R.id.nav_eventos) {
 
         } else if (id == R.id.nav_terminos) {
-
+            fragment = new TerminosCuentaFragment();
+            FragmentTransaction = true;
         } else if (id == R.id.nav_micuenta) {
-
+            fragment = new MiCuentaFragment();
+            FragmentTransaction = true;
         } else if (id == R.id.nav_cerrar) {
             Intent intent = new Intent (this, LoginActivity.class );
             startActivity(intent);

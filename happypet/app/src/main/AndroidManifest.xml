@@ -61,14 +61,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.MenuLateralActivity" />
         </activity>
-        <activity android:name=".UsuarioDetalle"></activity>
+        <activity android:name=".UsuarioDetalleActivity"></activity>
         <activity android:name=".AgregarMascotaEncontrada" />
         <activity android:name=".AgregarMascotaExtraviada" />
-        <activity android:name=".DatosAdopcion" />
         <activity android:name=".MiCuenta" />
         <activity android:name=".ProcesoAdopcion" />
         <activity android:name=".RegistrarDenuncia" />
-        <activity android:name=".TerminosYCondicionesAdopcion" />
+        <activity android:name=".TerminosYCondicionesAdopcion"
+            android:label="Terminos y Condiciones Adopción"
+            android:noHistory = "true" />
         <activity android:name=".TerminosyCondicionesCuenta" />
         <activity android:name=".TestAdopcion"></activity>
     </application>

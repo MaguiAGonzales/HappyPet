@@ -1,39 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.happypet.movil.happypet.ProcesoAdopcion">
-
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp">
-
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -41,87 +17,167 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/iv_detalle_FotoMascota"
                 android:layout_width="match_parent"
-                android:layout_height="129dp"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Nombre" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView23"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Sexo:" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="188dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Edad:" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView23"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Ciudad:" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="188dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Salud:" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_height="120dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_pa_nombreMascota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="5dp"
+                android:text="Fido"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:text="DATOS DE LA MASCOTA" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="#b8b8b8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/textView23"
-                    android:layout_width="185dp"
+                    android:id="@+id/textView12"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Particularidades:" />
+                    android:text="Tipo :" />
 
+                <TextView
+                    android:id="@+id/tv_pa_tipoMascota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Perro"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sexo :" />
+
+                <TextView
+                    android:id="@+id/tv_pa_sexoMascota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Macho"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Edad :" />
+
+                <TextView
+                    android:id="@+id/tv_pa_edadMascota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="15 Años"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Particularidades :" />
+
+                <TextView
+                    android:id="@+id/tv_pa_particularidadesMascota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="parti"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Salud :" />
+
+                <TextView
+                    android:id="@+id/tv_pa_saludMascota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="salu"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
                 android:text="PROCESO DE ADOPCIÓN" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="#b8b8b8" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -129,7 +185,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView23"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -137,10 +192,12 @@
 
                 <Button
                     android:id="@+id/button"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="33dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="3.70"
-                    android:text="Button" />
+                    android:text="COMPLETO"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -151,7 +208,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView23"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -160,9 +216,10 @@
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_weight="3.45"
-                    android:text="Button" />
+                    android:text="pendiente"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -173,7 +230,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView23"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -182,9 +238,10 @@
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_weight="3.54"
-                    android:text="Button" />
+                    android:text="PENDIENTE"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -192,4 +249,4 @@
 
 
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
