@@ -15,10 +15,11 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
+import clases.AdopcionMascota;
 import clases.Mascota;
 
-public class JsonMascotaParser {
-    public List<Mascota> leerFlujoJson(InputStream in) throws IOException {
+public class JsonAdopcionMascotaParser {
+    public List<AdopcionMascota> leerFlujoJson(InputStream in) throws IOException {
         // Nueva instancia JsonReader
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         reader.setLenient(true);
@@ -32,9 +33,9 @@ public class JsonMascotaParser {
 
     }
 
-    public List<Mascota> leerArrayMascotas(JsonReader reader) throws IOException {
+    public List<AdopcionMascota> leerArrayMascotas(JsonReader reader) throws IOException {
         // Lista temporal
-        ArrayList<Mascota> mascotas = new ArrayList<>();
+        ArrayList<AdopcionMascota> mascotas = new ArrayList<>();
 
         System.out.println("LEER OBJETO ------->  " + reader.toString());
 
@@ -48,9 +49,13 @@ public class JsonMascotaParser {
         return mascotas;
     }
 
-    public Mascota leerMascota(JsonReader reader) throws IOException {
+    public AdopcionMascota leerMascota(JsonReader reader) throws IOException {
         // Variables locales
-        int idMascota = 0;
+        int idAdopcion = 0;
+        String estado = null;
+        int usuarioAdopcionId = 0;
+
+        int mascotaId = 0;
         String nombre = null;
         String tipo = null;
         String sexo = null;
@@ -60,7 +65,7 @@ public class JsonMascotaParser {
         String adoptado = null;
         String imagen = null;
         String origen = null;
-        Integer usuarioId = 0;
+        Integer usuarioMascotaId = 0;
 
         System.out.println("INICIAR OBJETO --------- " + reader.toString());
         // Iniciar objeto
@@ -74,7 +79,16 @@ public class JsonMascotaParser {
             String name = reader.nextName();
             switch (name) {
                 case "id":
-                    idMascota = Integer.parseInt(reader.nextString());
+                    idAdopcion = Integer.parseInt(reader.nextString());
+                    break;
+                case "estado":
+                    estado = reader.nextString();
+                    break;
+                case "usuario_adopcion_id":
+                    usuarioAdopcionId = Integer.parseInt(reader.nextString());
+                    break;
+                case "mascota_id":
+                    mascotaId = Integer.parseInt(reader.nextString());
                     break;
                 case "nombre":
                     nombre = reader.nextString();
@@ -94,11 +108,8 @@ public class JsonMascotaParser {
                 case "ano_nacimiento":
                     anio = reader.nextString();
                     break;
-                case "id_usuario":
-                    usuarioId = Integer.parseInt(reader.nextString());
-                    break;
-                case "es_adoptado":
-                    adoptado = reader.nextString();
+                case "usuario_mascota_id":
+                    usuarioMascotaId = Integer.parseInt(reader.nextString());
                     break;
                 case "imagen":
                     imagen = reader.nextString();
@@ -110,6 +121,6 @@ public class JsonMascotaParser {
         }
         reader.endObject();
 //        System.out.println(nombre);
-        return new Mascota(idMascota,nombre,tipo,sexo,particularidades,salud,anio,adoptado,imagen,origen,usuarioId);
+        return new AdopcionMascota(idAdopcion, estado, usuarioAdopcionId, mascotaId,nombre,tipo,sexo,particularidades,salud,anio,imagen,usuarioMascotaId);
     }
 }

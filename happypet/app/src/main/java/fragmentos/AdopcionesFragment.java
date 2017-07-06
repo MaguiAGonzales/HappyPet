@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.happypet.movil.happypet.MascotaDetalleActivity;
 import com.happypet.movil.happypet.MismascotasActivity;
+import com.happypet.movil.happypet.ProcesoAdopcion;
 import com.happypet.movil.happypet.R;
 
 import java.io.BufferedInputStream;
@@ -40,7 +41,10 @@ import java.util.List;
 
 import adaptadores.adaptadorMascotas;
 import adaptadores.adaptadorMascotasDisponibles;
+import adaptadores.adaptadorMascotasMisAdopciones;
+import clases.AdopcionMascota;
 import clases.Mascota;
+import parseadores.JsonAdopcionMascotaParser;
 import parseadores.JsonMascotaParser;
 
 /**
@@ -143,6 +147,30 @@ public class AdopcionesFragment extends Fragment {
 
         listaMisAdopciones= (ListView) me.findViewById(R.id.lvMisAdopciones);
         cargarMisAdopciones();
+
+        listaMisAdopciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
+                Mascota mascotaSel = (Mascota) pariente.getItemAtPosition(posicion);
+
+                Intent intent = new Intent(getContext(), ProcesoAdopcion.class);
+                intent.putExtra("idUsuario", USUARIO_ID);
+
+                intent.putExtra("idMascota", String.valueOf(mascotaSel.getIdMascota()));
+                intent.putExtra("foto", mascotaSel.getImagen());
+                intent.putExtra("nombre", mascotaSel.getNombre());
+                intent.putExtra("tipo", mascotaSel.getTipo());
+                intent.putExtra("sexo", mascotaSel.getSexo());
+                intent.putExtra("particularidad", mascotaSel.getParticularidades());
+                intent.putExtra("salud", mascotaSel.getSalud());
+                intent.putExtra("edad", String.valueOf(mascotaSel.getEdad()) );
+
+                intent.putExtra("estado", String.valueOf(mascotaSel.getEdad()) );
+
+                startActivity(intent);
+
+            }
+        });
 
         //--------------------------------------------
 
@@ -277,15 +305,15 @@ public class AdopcionesFragment extends Fragment {
     }
 
 
-    public class TareaMisMascotas extends AsyncTask<URL, Void, List<Mascota>> {
+    public class TareaMisMascotas extends AsyncTask<URL, Void, List<AdopcionMascota>> {
         @Override
         protected void onPreExecute() {
             progressMisAdopciones = ProgressDialog.show(getActivity(), "", "Cargando Mis Mascotas...");
         }
 
         @Override
-        protected List<Mascota> doInBackground(URL... urls) {
-            List<Mascota> mascotas = null;
+        protected List<AdopcionMascota> doInBackground(URL... urls) {
+            List<AdopcionMascota> mascotas = null;
 
             try {
                 // Establecer la conexión
@@ -299,11 +327,11 @@ public class AdopcionesFragment extends Fragment {
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
+                    mascotas.add(new AdopcionMascota(0, null, 0, 0, null, null, null, null, null, null, null, 0));
                 } else {
                     // Parsear el flujo con formato JSON
                     InputStream in = new BufferedInputStream(conMisAdopciones.getInputStream());
-                    JsonMascotaParser parser = new JsonMascotaParser();
+                    JsonAdopcionMascotaParser parser = new JsonAdopcionMascotaParser();
 
 //                    System.out.println("ENTRADA ---- " + in.toString());
 
@@ -321,12 +349,12 @@ public class AdopcionesFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<Mascota> mascotas) {
+        protected void onPostExecute(List<AdopcionMascota> mascotas) {
             /*
             Asignar los objetos de Json parseados al adaptador
              */
             if(mascotas!=null) {
-                adaptadorMisAdopciones = new adaptadorMascotasDisponibles(getActivity().getBaseContext(), mascotas);
+                adaptadorMisAdopciones = new adaptadorMascotasMisAdopciones(getActivity().getBaseContext(), mascotas);
                 listaMisAdopciones.setAdapter(adaptadorMisAdopciones);
             }else{
                 Toast.makeText(

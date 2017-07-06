@@ -15,10 +15,11 @@ import com.happypet.movil.happypet.R;
 
 import java.util.List;
 
+import clases.AdopcionMascota;
 import clases.Mascota;
 
-public class adaptadorMascotasDisponibles extends ArrayAdapter<Mascota> {
-    public adaptadorMascotasDisponibles(Context context, List<Mascota> objects) {
+public class adaptadorMascotasMisAdopciones extends ArrayAdapter<AdopcionMascota> {
+    public adaptadorMascotasMisAdopciones(Context context, List<AdopcionMascota> objects) {
         super(context, 0, objects);
     }
 
@@ -45,7 +46,7 @@ public class adaptadorMascotasDisponibles extends ArrayAdapter<Mascota> {
         ImageView imagen = (ImageView)v.findViewById(R.id.ivDisponible_MascotaMini);
 
         //Obteniendo instancia de la Tarea en la posición actual
-        final Mascota item = getItem(position);
+        final AdopcionMascota item = getItem(position);
 
 //        System.out.println("----------- NOMBRE ---------->     " + item.getNombre());
         nombre.setText(item.getNombre());

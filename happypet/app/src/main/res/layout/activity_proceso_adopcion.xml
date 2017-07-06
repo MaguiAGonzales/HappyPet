@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:text="DATOS DE LA MASCOTA" />
+                android:text="DATOS DE LA MASCOTA"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -169,7 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingTop="10dp"
-                android:text="PROCESO DE ADOPCIÓN" />
+                android:text="PROCESO DE ADOPCIÓN"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -181,7 +183,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -191,7 +193,7 @@
                     android:text="1. Datos personales" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btn_pa_fase1"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -204,7 +206,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -214,7 +216,7 @@
                     android:text="2. Test de Adopción" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btn_pa_fase2"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_weight="3.45"
@@ -226,7 +228,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -236,7 +238,7 @@
                     android:text="3. Fecha de Visita" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btn_pa_fase3"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_weight="3.54"

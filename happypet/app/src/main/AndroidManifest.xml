@@ -42,7 +42,6 @@
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,11 +60,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.MenuLateralActivity" />
         </activity>
-        <activity android:name=".UsuarioDetalleActivity"></activity>
+
+        <activity android:name=".UsuarioDetalleActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="FASE 1 de la Adopción"
+            android:parentActivityName=".MascotaDetalleActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.MascotaDetalleActivity" />
+        </activity>
+
         <activity android:name=".AgregarMascotaEncontrada" />
         <activity android:name=".AgregarMascotaExtraviada" />
         <activity android:name=".MiCuenta" />
-        <activity android:name=".ProcesoAdopcion" />
+        <activity android:name=".ProcesoAdopcion"
+            android:configChanges="screenSize|orientation"
+            android:label="Estado de Adopción"
+            android:parentActivityName=".MenuLateralActivity"> >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.MenuLateralActivity" />
+        </activity>
         <activity android:name=".RegistrarDenuncia" />
         <activity android:name=".TerminosYCondicionesAdopcion"
             android:label="Terminos y Condiciones Adopción"

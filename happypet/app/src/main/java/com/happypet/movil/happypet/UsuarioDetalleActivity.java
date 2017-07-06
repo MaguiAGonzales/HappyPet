@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -58,6 +59,8 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_detalle);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         USUARIO_ID = getIntent().getStringExtra("idUsuario");
         MASCOTA_ID = getIntent().getStringExtra("id");
 
@@ -98,6 +101,16 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
         });
 
         cargar(USUARIO_ID);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // ============== CARGAR INFO USUARIO ====================
@@ -285,6 +298,9 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
                     intent.putExtra("particularidad", MASCOTA_PARTICULARIDAD);
                     intent.putExtra("salud", MASCOTA_SALUD);
                     intent.putExtra("edad", MASCOTA_EDAD );
+
+                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.putExtra("estado", "F1" );
 
                     startActivity(intent);
 

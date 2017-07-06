@@ -1,44 +1,46 @@
 package clases;
 
 
-import android.icu.util.Calendar;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Mascota {
-    private int idMascota;
+public class AdopcionMascota {
+    private int idAdopcion;
+    private String estado;
+    private int usuarioAdopcionId;
+
+    private int mascotaId;
     private String nombre;
     private String tipo;
     private String sexo;
     private String particularidades;
     private String salud;
     private String anio;
-    private String adoptado;
     private String imagen;
-    private String origen;
-    private int usuarioId;
+    private int usuarioMascotaId;
 
-    public Mascota(int idMascota, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String adoptado, String imagen, String origen, int usuarioId) {
-        this.idMascota = idMascota;
+    public AdopcionMascota(int idAdopcion, String estado, int usuarioAdopcionId, int mascotaId, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String imagen, int usuarioMascotaId) {
+        this.idAdopcion = idAdopcion;
+        this.estado = estado;
+        this.usuarioAdopcionId = usuarioAdopcionId;
+
+        this.mascotaId = mascotaId;
         this.nombre = nombre;
         this.tipo = tipo;
         this.sexo = sexo;
         this.particularidades = particularidades;
         this.salud = salud;
         this.anio = anio;
-        this.adoptado = adoptado;
         this.imagen = imagen;
-        this.origen = origen;
-        this.usuarioId = usuarioId;
+        this.usuarioMascotaId = usuarioMascotaId;
     }
 
-    public int getIdMascota() {
-        return idMascota;
+    public int getMascotaId() {
+        return mascotaId;
     }
 
-    public void setIdMascota(int idMascota) {
-        this.idMascota = idMascota;
+    public void setMascotaId(int mascotaId) {
+        this.mascotaId = mascotaId;
     }
 
     public String getNombre() {
@@ -89,14 +91,6 @@ public class Mascota {
         this.anio = anio;
     }
 
-    public String getAdoptado() {
-        return adoptado;
-    }
-
-    public void setAdoptado(String adoptado) {
-        this.adoptado = adoptado;
-    }
-
     public String getImagen() {
         return imagen;
     }
@@ -105,20 +99,13 @@ public class Mascota {
         this.imagen = imagen;
     }
 
-    public String getOrigen() {
-        return origen;
+
+    public int getUsuarioMascotaId() {
+        return usuarioMascotaId;
     }
 
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuarioMascotaId(int usuarioMascotaId) {
+        this.usuarioMascotaId = usuarioMascotaId;
     }
 
     public int getEdad(){
@@ -126,5 +113,31 @@ public class Mascota {
 //        Calendar calendar = Calendar.getInstance();
 //        int anioActual = calendar.get(Calendar.YEAR);
         return anioActual - Integer.parseInt(this.anio);
+    }
+
+
+
+    public int getIdAdopcion() {
+        return idAdopcion;
+    }
+
+    public void setIdAdopcion(int idAdopcion) {
+        this.idAdopcion = idAdopcion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getUsuarioAdopcionId() {
+        return usuarioAdopcionId;
+    }
+
+    public void setUsuarioAdopcionId(int usuarioAdopcionId) {
+        this.usuarioAdopcionId = usuarioAdopcionId;
     }
 }
