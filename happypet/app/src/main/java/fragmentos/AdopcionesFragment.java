@@ -118,7 +118,7 @@ public class AdopcionesFragment extends Fragment {
                 Intent intent = new Intent(getContext(), MascotaDetalleActivity.class);
                 intent.putExtra("idUsuario", USUARIO_ID);
 
-                intent.putExtra("id", mascotaSel.getIdMascota());
+                intent.putExtra("id", String.valueOf(mascotaSel.getIdMascota()));
                 intent.putExtra("foto", mascotaSel.getImagen());
                 intent.putExtra("nombre", mascotaSel.getNombre());
                 intent.putExtra("tipo", mascotaSel.getTipo());
