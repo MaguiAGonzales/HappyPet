@@ -15,11 +15,9 @@
     </string>
     <string name="title_activity_mismascotas">Mis Mascotas</string>
     <string name="title_activity_mascota_agregar">Agregar Mascota</string>
-<<<<<<< HEAD
+
     <string name="ipweb">192.168.1.41</string>
-=======
-    <string name="ipweb">192.168.0.4</string>
->>>>>>> 443d56072c9ad9348368613922ee149c230c9120
+
     <string name="puertoweb">8081</string>
     <string name="title_activity_menu_lateral">Happy Pet</string>
 
