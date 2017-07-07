@@ -1,16 +1,22 @@
 package com.happypet.movil.happypet;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import clases.DialogoAlerta;
 
 public class ProcesoAdopcion extends AppCompatActivity {
 
@@ -39,6 +45,7 @@ public class ProcesoAdopcion extends AppCompatActivity {
         MASCOTA_EDAD = getIntent().getStringExtra("edad");
 
         ESTADO = getIntent().getStringExtra("estado");
+        System.out.println("ESTADO -->  " + ESTADO);
 
         ImageView foto = (ImageView)findViewById(R.id.iv_detalle_FotoMascota);
         byte[] decodedString = Base64.decode(MASCOTA_FOTO, Base64.DEFAULT);
@@ -71,25 +78,54 @@ public class ProcesoAdopcion extends AppCompatActivity {
             case "F1":
                 btnFase1.setText("COMPLETO");
                 btnFase1.setBackgroundColor(Color.argb(255,0,166,90));
-                btnFase1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+                btnFase1.setEnabled(false);
 
                 btnFase2.setText("PENDIENTE");
                 btnFase3.setText("PENDIENTE");
+                btnFase3.setEnabled(false);
                 break;
             case "F2":
                 btnFase1.setText("COMPLETO");
                 btnFase1.setBackgroundColor(Color.argb(255,0,166,90));
-                btnFase1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+                btnFase1.setEnabled(false);
 
-                btnFase2.setText("PENDIENTE");
+                btnFase2.setText("COMPLETO");
                 btnFase2.setBackgroundColor(Color.argb(255,0,166,90));
-                btnFase2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+                btnFase2.setEnabled(false);
 
                 btnFase3.setText("PENDIENTE");
                 break;
+            case "F3":
+                btnFase1.setText("COMPLETO");
+                btnFase1.setBackgroundColor(Color.argb(255,0,166,90));
+                btnFase1.setEnabled(false);
+
+                btnFase2.setText("COMPLETO");
+                btnFase2.setBackgroundColor(Color.argb(255,0,166,90));
+                btnFase2.setEnabled(false);
+
+                btnFase3.setText("COMPLETO");
+                btnFase3.setBackgroundColor(Color.argb(255,0,166,90));
+                btnFase3.setEnabled(false);
+                break;
         }
 
-
+        btnFase2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TestAdopcion.class);
+                intent.putExtra("idUsuario", USUARIO_ID);
+                intent.putExtra("idMascota", MASCOTA_ID);
+//                intent.putExtra("foto", mascotaSel.getImagen());
+//                intent.putExtra("nombre", mascotaSel.getNombre());
+//                intent.putExtra("tipo", mascotaSel.getTipo());
+//                intent.putExtra("sexo", mascotaSel.getSexo());
+//                intent.putExtra("particularidad", mascotaSel.getParticularidades());
+//                intent.putExtra("salud", mascotaSel.getSalud());
+//                intent.putExtra("edad", String.valueOf(mascotaSel.getEdad()) );
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override
@@ -101,4 +137,17 @@ public class ProcesoAdopcion extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+//                String result=data.getStringExtra("result");
+                Toast.makeText(this, "Se tiene que guardarel test" , Toast.LENGTH_LONG).show();
+            }else {
+
+            }
+        }
+    }
+
 }

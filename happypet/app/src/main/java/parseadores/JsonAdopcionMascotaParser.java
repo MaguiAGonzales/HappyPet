@@ -53,6 +53,7 @@ public class JsonAdopcionMascotaParser {
         // Variables locales
         int idAdopcion = 0;
         String estado = null;
+        String fecha = null;
         int usuarioAdopcionId = 0;
 
         int mascotaId = 0;
@@ -62,9 +63,7 @@ public class JsonAdopcionMascotaParser {
         String particularidades = null;
         String salud = null;
         String anio = null;
-        String adoptado = null;
         String imagen = null;
-        String origen = null;
         Integer usuarioMascotaId = 0;
 
         System.out.println("INICIAR OBJETO --------- " + reader.toString());
@@ -83,6 +82,9 @@ public class JsonAdopcionMascotaParser {
                     break;
                 case "estado":
                     estado = reader.nextString();
+                    break;
+                case "fecha":
+                    fecha = reader.nextString();
                     break;
                 case "usuario_adopcion_id":
                     usuarioAdopcionId = Integer.parseInt(reader.nextString());
@@ -121,6 +123,6 @@ public class JsonAdopcionMascotaParser {
         }
         reader.endObject();
 //        System.out.println(nombre);
-        return new AdopcionMascota(idAdopcion, estado, usuarioAdopcionId, mascotaId,nombre,tipo,sexo,particularidades,salud,anio,imagen,usuarioMascotaId);
+        return new AdopcionMascota(idAdopcion, estado, fecha, usuarioAdopcionId, mascotaId,nombre,tipo,sexo,particularidades,salud,anio,imagen,usuarioMascotaId);
     }
 }

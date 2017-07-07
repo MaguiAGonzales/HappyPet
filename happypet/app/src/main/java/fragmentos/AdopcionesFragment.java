@@ -42,6 +42,7 @@ import java.util.List;
 import adaptadores.adaptadorMascotas;
 import adaptadores.adaptadorMascotasDisponibles;
 import adaptadores.adaptadorMascotasMisAdopciones;
+import clases.Adopcion;
 import clases.AdopcionMascota;
 import clases.Mascota;
 import parseadores.JsonAdopcionMascotaParser;
@@ -151,12 +152,12 @@ public class AdopcionesFragment extends Fragment {
         listaMisAdopciones.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
-                Mascota mascotaSel = (Mascota) pariente.getItemAtPosition(posicion);
+                AdopcionMascota mascotaSel = (AdopcionMascota) pariente.getItemAtPosition(posicion);
 
                 Intent intent = new Intent(getContext(), ProcesoAdopcion.class);
                 intent.putExtra("idUsuario", USUARIO_ID);
 
-                intent.putExtra("idMascota", String.valueOf(mascotaSel.getIdMascota()));
+                intent.putExtra("idMascota", String.valueOf(mascotaSel.getMascotaId()));
                 intent.putExtra("foto", mascotaSel.getImagen());
                 intent.putExtra("nombre", mascotaSel.getNombre());
                 intent.putExtra("tipo", mascotaSel.getTipo());
@@ -165,7 +166,7 @@ public class AdopcionesFragment extends Fragment {
                 intent.putExtra("salud", mascotaSel.getSalud());
                 intent.putExtra("edad", String.valueOf(mascotaSel.getEdad()) );
 
-                intent.putExtra("estado", String.valueOf(mascotaSel.getEdad()) );
+                intent.putExtra("estado", mascotaSel.getEstado() );
 
                 startActivity(intent);
 
@@ -327,7 +328,7 @@ public class AdopcionesFragment extends Fragment {
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new AdopcionMascota(0, null, 0, 0, null, null, null, null, null, null, null, 0));
+                    mascotas.add(new AdopcionMascota(0, null, null, 0, 0, null, null, null, null, null, null, null, 0));
                 } else {
                     // Parsear el flujo con formato JSON
                     InputStream in = new BufferedInputStream(conMisAdopciones.getInputStream());

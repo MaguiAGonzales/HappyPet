@@ -12,6 +12,7 @@ public class AdopcionMascota {
     private int mascotaId;
     private String nombre;
     private String tipo;
+    private String fecha;
     private String sexo;
     private String particularidades;
     private String salud;
@@ -19,9 +20,10 @@ public class AdopcionMascota {
     private String imagen;
     private int usuarioMascotaId;
 
-    public AdopcionMascota(int idAdopcion, String estado, int usuarioAdopcionId, int mascotaId, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String imagen, int usuarioMascotaId) {
+    public AdopcionMascota(int idAdopcion, String estado, String fecha, int usuarioAdopcionId, int mascotaId, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String imagen, int usuarioMascotaId) {
         this.idAdopcion = idAdopcion;
         this.estado = estado;
+        this.fecha = fecha;
         this.usuarioAdopcionId = usuarioAdopcionId;
 
         this.mascotaId = mascotaId;
@@ -139,5 +141,13 @@ public class AdopcionMascota {
 
     public void setUsuarioAdopcionId(int usuarioAdopcionId) {
         this.usuarioAdopcionId = usuarioAdopcionId;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

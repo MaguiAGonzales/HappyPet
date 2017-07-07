@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.happypet.movil.happypet.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import clases.AdopcionMascota;
@@ -35,24 +38,55 @@ public class adaptadorMascotasMisAdopciones extends ArrayAdapter<AdopcionMascota
         //Comprobando si el View no existe
         if (null == convertView) {
             //Si no existe, entonces inflarlo
-            v = inflater.inflate(R.layout.activity_mascota_disponible_item,parent,false);
+            v = inflater.inflate(R.layout.activity_mis_adopciones_item,parent,false);
         }
 
         //Obteniendo instancias de los elementos
-        TextView nombre = (TextView)v.findViewById(R.id.tvDisponible_NombreMascota);
-        TextView tipo = (TextView)v.findViewById(R.id.tvDisponible_TipoMascota);
-        TextView sexo = (TextView)v.findViewById(R.id.tvDisponible_SexoMascota);
-        TextView anio = (TextView)v.findViewById(R.id.tvDisponible_AnioMascota);
-        ImageView imagen = (ImageView)v.findViewById(R.id.ivDisponible_MascotaMini);
+        TextView nombre = (TextView)v.findViewById(R.id.tvMisAdopciones_NombreMascota);
+        TextView tipo = (TextView)v.findViewById(R.id.tvMisAdopciones_TipoMascota);
+        TextView fecha = (TextView)v.findViewById(R.id.tvMisAdopciones_Fecha);
+        TextView estado = (TextView)v.findViewById(R.id.tvMisAdopciones_Estado);
+        ImageView imagen = (ImageView)v.findViewById(R.id.ivMisAdopciones_MascotaMini);
 
         //Obteniendo instancia de la Tarea en la posición actual
         final AdopcionMascota item = getItem(position);
 
-//        System.out.println("----------- NOMBRE ---------->     " + item.getNombre());
         nombre.setText(item.getNombre());
         tipo.setText(item.getTipo());
-        sexo.setText(item.getSexo());
-        anio.setText(item.getAnio());
+
+//        String dtStart = "2010-10-15 09:27:37";
+
+        String fechaAdo = item.getFecha();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+        try {
+            Date fechaInicio = format.parse(fechaAdo);
+            format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+            fechaAdo = format.format(fechaInicio);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        fecha.setText(fechaAdo);
+
+        String estadoLabel = "";
+        switch (item.getEstado()){
+            case "F1":
+                estadoLabel = "PENDIENTE : Fase 1";
+                break;
+            case "F2":
+                estadoLabel = "PENDIENTE : Fase 2";
+                break;
+            case "F3":
+                estadoLabel = "PENDIENTE : Fase 3";
+                break;
+            case "TE":
+                estadoLabel = "COMPLETO";
+                break;
+            case "NP":
+                estadoLabel = "NO PASÓ";
+                break;
+        }
+        estado.setText(estadoLabel);
 
         byte[] decodedString = Base64.decode(item.getImagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

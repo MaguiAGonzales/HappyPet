@@ -194,11 +194,10 @@
 
                 <Button
                     android:id="@+id/btn_pa_fase1"
-                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
                     android:layout_weight="3.70"
-                    android:text="COMPLETO"
+                    android:text="PENDIENTE"
                     android:textSize="12sp" />
 
             </LinearLayout>
