@@ -128,7 +128,9 @@ public class MenuLateralActivity extends AppCompatActivity
         } else if (id == R.id.nav_alertas) {
 
         } else if (id == R.id.nav_eventos) {
-
+            Intent intent = new Intent (this, EventosActivity.class );
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_terminos) {
             fragment = new TerminosCuentaFragment();
             FragmentTransaction = true;

@@ -45,37 +45,23 @@ public class EventosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventos);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.srlContainer);
 
         lista = (ListView) findViewById(R.id.lvEventos);
         cargar("");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btnAgregarMascota);
-        fab.setOnClickListener(new View.OnClickListener() {
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (view.getContext(), MascotaAgregarActivity.class );
-                startActivityForResult(intent, 0);
-
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+            public void onRefresh() {
+                cargar("");
+                swipeContainer.setRefreshing(false);
             }
         });
-
-        swipeContainer.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-        if(requestCode==0){
-            cargar("");
-        }
-    }
 
     private void cargar(String filtro) {
         try {
@@ -105,10 +91,7 @@ public class EventosActivity extends AppCompatActivity {
     }
 
 
-    public void onRefresh() {
-        cargar("");
-        swipeContainer.setRefreshing(false);
-    }
+
 
     public class JsonTask extends AsyncTask<URL, Void, List<Evento>> {
         @Override
