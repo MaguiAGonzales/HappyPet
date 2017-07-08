@@ -84,7 +84,14 @@
             android:label="Terminos y Condiciones Adopción"
             android:noHistory="true" />
         <activity android:name=".TerminosyCondicionesCuenta" />
-        <activity android:name=".TestAdopcion" />
+        <activity android:name=".TestAdopcion"
+            android:configChanges="screenSize|orientation"
+            android:label="Test de Adopción"
+            android:parentActivityName=".ProcesoAdopcion"> >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.ProcesoAdopcion" />
+        </activity>
         <activity android:name=".EventosActivity"></activity>
     </application>
 

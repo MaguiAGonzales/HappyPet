@@ -156,6 +156,7 @@ public class AdopcionesFragment extends Fragment {
 
                 Intent intent = new Intent(getContext(), ProcesoAdopcion.class);
                 intent.putExtra("idUsuario", USUARIO_ID);
+                intent.putExtra("idAdopcion", String.valueOf(mascotaSel.getIdAdopcion()));
 
                 intent.putExtra("idMascota", String.valueOf(mascotaSel.getMascotaId()));
                 intent.putExtra("foto", mascotaSel.getImagen());
