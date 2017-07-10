@@ -290,6 +290,7 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), ProcesoAdopcion.class);
                     intent.putExtra("idUsuario", USUARIO_ID);
                     intent.putExtra("idMascota", MASCOTA_ID);
+                    intent.putExtra("idAdopcion", obj.getString("id").toString());
 
                     intent.putExtra("foto", MASCOTA_FOTO);
                     intent.putExtra("nombre", MASCOTA_NOMBRE);
@@ -302,7 +303,9 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
                     intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.putExtra("estado", "F1" );
 
-                    startActivity(intent);
+//                    startActivity(intent);
+
+                    startActivityForResult(intent, 2);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
