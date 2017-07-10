@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Base64;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -73,10 +74,21 @@ public class MenuLateralActivity extends AppCompatActivity
         imgfotoUsuario.setImageBitmap(decodedByte);
 
 
+        Fragment fragment = new AdopcionesFragment();
+        Bundle args = new Bundle();
+        args.putString("id", ID);
+        fragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedorPrincipal, fragment).commit();
+
+        MenuItem item = navigationView.getMenu().getItem(1);
+        item.setChecked(true);
+        getSupportActionBar().setTitle(item.getTitle());
     }
 
     @Override
     public void onBackPressed() {
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -128,13 +140,9 @@ public class MenuLateralActivity extends AppCompatActivity
         } else if (id == R.id.nav_alertas) {
 
         } else if (id == R.id.nav_eventos) {
-<<<<<<< HEAD
-            
-=======
             Intent intent = new Intent (this, EventosActivity.class );
             startActivity(intent);
             return true;
->>>>>>> 3f3a4ca17273a48557f4f388e57e787b83d88444
         } else if (id == R.id.nav_terminos) {
             fragment = new TerminosCuentaFragment();
             FragmentTransaction = true;
@@ -153,7 +161,7 @@ public class MenuLateralActivity extends AppCompatActivity
             fragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contenedorPrincipal, fragment)
+                    .replace(R.id.contenedorPrincipal, fragment, "FragmentTag")
                     .commit();
             item.setChecked(true);
             getSupportActionBar().setTitle(item.getTitle());
@@ -168,5 +176,12 @@ public class MenuLateralActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+//    @Override
+//    public void onRestart() {
+//        super.onRestart();
+//        AdopcionesFragment frag = (AdopcionesFragment) getSupportFragmentManager().findFragmentByTag("FragmentTag");
+//        frag.cargarAdopcionesDisponibles();
+//    }
 
 }

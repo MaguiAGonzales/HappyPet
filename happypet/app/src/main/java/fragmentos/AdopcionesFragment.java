@@ -181,7 +181,7 @@ public class AdopcionesFragment extends Fragment {
 
     //====================== DATA ADOPCIONES ===========================
 
-    private void cargarAdopcionesDisponibles (){
+    public void cargarAdopcionesDisponibles (){
         try {
             ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -399,4 +399,5 @@ public class AdopcionesFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

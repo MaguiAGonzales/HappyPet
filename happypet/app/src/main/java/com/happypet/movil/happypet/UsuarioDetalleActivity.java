@@ -300,12 +300,12 @@ public class UsuarioDetalleActivity extends AppCompatActivity {
                     intent.putExtra("salud", MASCOTA_SALUD);
                     intent.putExtra("edad", MASCOTA_EDAD );
 
-                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                    intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.putExtra("estado", "F1" );
 
-//                    startActivity(intent);
-
-                    startActivityForResult(intent, 2);
+                    startActivity(intent);
+                    finish();
+//                    startActivityForResult(intent, 2);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

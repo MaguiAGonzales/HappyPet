@@ -9,7 +9,11 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -33,6 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import clases.DialogoAlerta;
+import fragmentos.AdopcionesFragment;
 
 public class ProcesoAdopcion extends AppCompatActivity {
 
@@ -104,6 +109,17 @@ public class ProcesoAdopcion extends AppCompatActivity {
             }
         });
     }
+
+//
+//    @Override
+//    public void onBackPressed() {
+//
+//
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        MenuItem item = navigationView.getMenu().getItem(1);
+//        item.setChecked(true);
+//        getSupportActionBar().setTitle(item.getTitle());
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

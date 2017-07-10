@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FragmentoAdopciones"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fragmentos.AdopcionesFragment">
@@ -39,13 +40,13 @@
                             android:id="@+id/lvMascotasDisponibles"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
                             android:background="#f4f4f4"
+                            android:clickable="true"
                             android:divider="#E5E5E5"
                             android:dividerHeight="3dp"
-                            android:scrollbars="vertical"
-                            android:clickable="true"
                             android:focusable="false"
+                            android:padding="5dp"
+                            android:scrollbars="vertical"
                             android:touchscreenBlocksFocus="true" />
 
                     </android.support.v4.widget.SwipeRefreshLayout>
@@ -67,13 +68,13 @@
                             android:id="@+id/lvMisAdopciones"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="5dp"
                             android:background="#f4f4f4"
+                            android:clickable="true"
                             android:divider="#E5E5E5"
                             android:dividerHeight="3dp"
-                            android:scrollbars="vertical"
-                            android:clickable="true"
                             android:focusable="false"
+                            android:padding="5dp"
+                            android:scrollbars="vertical"
                             android:touchscreenBlocksFocus="true" />
 
                     </android.support.v4.widget.SwipeRefreshLayout>

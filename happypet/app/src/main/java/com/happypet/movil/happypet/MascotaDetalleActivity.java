@@ -128,6 +128,7 @@ public class MascotaDetalleActivity extends AppCompatActivity {
         intent.putExtra("edad", MASCOTA_EDAD);
 
         startActivity(intent);
+        finish();
     }
 
     @Override
