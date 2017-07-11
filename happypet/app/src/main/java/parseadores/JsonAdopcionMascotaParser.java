@@ -66,6 +66,11 @@ public class JsonAdopcionMascotaParser {
         String imagen = null;
         Integer usuarioMascotaId = 0;
 
+        String visitaFecha = null;
+        String visitaHora = null;
+        String visitaDescripcion = null;
+
+
         System.out.println("INICIAR OBJETO --------- " + reader.toString());
         // Iniciar objeto
         reader.beginObject();
@@ -116,6 +121,16 @@ public class JsonAdopcionMascotaParser {
                 case "imagen":
                     imagen = reader.nextString();
                     break;
+
+                case "fecha_adopcion":
+                    visitaFecha = reader.nextString();
+                    break;
+                case "hora_adopcion":
+                    visitaHora = reader.nextString();
+                    break;
+                case "descripcion_adopcion":
+                    visitaDescripcion = reader.nextString();
+                    break;
                 default:
                     reader.skipValue();
                     break;
@@ -123,6 +138,6 @@ public class JsonAdopcionMascotaParser {
         }
         reader.endObject();
 //        System.out.println(nombre);
-        return new AdopcionMascota(idAdopcion, estado, fecha, usuarioAdopcionId, mascotaId,nombre,tipo,sexo,particularidades,salud,anio,imagen,usuarioMascotaId);
+        return new AdopcionMascota(idAdopcion, estado, fecha, usuarioAdopcionId, mascotaId,nombre,tipo,sexo,particularidades,salud,anio,imagen,usuarioMascotaId, visitaFecha, visitaHora, visitaDescripcion);
     }
 }

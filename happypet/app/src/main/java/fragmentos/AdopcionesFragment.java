@@ -136,6 +136,8 @@ public class AdopcionesFragment extends Fragment {
             }
         });
 
+
+
         // ------------ TAB MIS ADOPCIONES -------------
         scMisAdopciones = (SwipeRefreshLayout) me.findViewById(R.id.srlMisAdopciones);
         scMisAdopciones.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -169,6 +171,10 @@ public class AdopcionesFragment extends Fragment {
 
                 intent.putExtra("estado", mascotaSel.getEstado() );
 
+                intent.putExtra("fecha", mascotaSel.getVisitaFecha() );
+                intent.putExtra("hora", mascotaSel.getVisitaHora() );
+                intent.putExtra("descripcion", mascotaSel.getVisitaDescripcion() );
+
                 startActivity(intent);
 
             }
@@ -178,6 +184,7 @@ public class AdopcionesFragment extends Fragment {
 
         return  me;
     }
+
 
     //====================== DATA ADOPCIONES ===========================
 
@@ -329,7 +336,7 @@ public class AdopcionesFragment extends Fragment {
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new AdopcionMascota(0, null, null, 0, 0, null, null, null, null, null, null, null, 0));
+                    mascotas.add(new AdopcionMascota(0, null, null, 0, 0, null, null, null, null, null, null, null, 0, null, null, null));
                 } else {
                     // Parsear el flujo con formato JSON
                     InputStream in = new BufferedInputStream(conMisAdopciones.getInputStream());
