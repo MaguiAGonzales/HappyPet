@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fragmentos.AdopcionesFragment;
+import fragmentos.AlertasFragment;
+import fragmentos.DenunciasFragment;
 import fragmentos.MiCuentaFragment;
 import fragmentos.MisMascotasFragment;
 import fragmentos.TerminosCuentaFragment;
@@ -30,7 +32,9 @@ public class MenuLateralActivity extends AppCompatActivity
         AdopcionesFragment.OnFragmentInteractionListener,
         MisMascotasFragment.OnFragmentInteractionListener,
         MiCuentaFragment.OnFragmentInteractionListener,
-        TerminosCuentaFragment.OnFragmentInteractionListener{
+        TerminosCuentaFragment.OnFragmentInteractionListener,
+        DenunciasFragment.OnFragmentInteractionListener,
+        AlertasFragment.OnFragmentInteractionListener{
 
     TextView tbNombreUsuario, tbCorreoUsuario;
     ImageView imgfotoUsuario;
@@ -136,9 +140,11 @@ public class MenuLateralActivity extends AppCompatActivity
             fragment = new AdopcionesFragment();
             FragmentTransaction = true;
         } else if (id == R.id.nav_denuncias) {
-
+            fragment = new DenunciasFragment();
+            FragmentTransaction = true;
         } else if (id == R.id.nav_alertas) {
-
+            fragment = new AlertasFragment();
+            FragmentTransaction = true;
         } else if (id == R.id.nav_eventos) {
             Intent intent = new Intent (this, EventosActivity.class );
             startActivity(intent);

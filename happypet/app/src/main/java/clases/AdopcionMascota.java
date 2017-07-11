@@ -20,7 +20,11 @@ public class AdopcionMascota {
     private String imagen;
     private int usuarioMascotaId;
 
-    public AdopcionMascota(int idAdopcion, String estado, String fecha, int usuarioAdopcionId, int mascotaId, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String imagen, int usuarioMascotaId) {
+    private String visitaFecha;
+    private String visitaHora;
+    private String visitaDescripcion;
+
+    public AdopcionMascota(int idAdopcion, String estado, String fecha, int usuarioAdopcionId, int mascotaId, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String imagen, int usuarioMascotaId, String visitaFecha, String visitaHora, String visitaDescripcion) {
         this.idAdopcion = idAdopcion;
         this.estado = estado;
         this.fecha = fecha;
@@ -35,6 +39,10 @@ public class AdopcionMascota {
         this.anio = anio;
         this.imagen = imagen;
         this.usuarioMascotaId = usuarioMascotaId;
+
+        this.visitaFecha = visitaFecha;
+        this.visitaHora = visitaHora;
+        this.visitaDescripcion = visitaDescripcion;
     }
 
     public int getMascotaId() {
@@ -149,5 +157,29 @@ public class AdopcionMascota {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getVisitaFecha() {
+        return visitaFecha;
+    }
+
+    public void setVisitaFecha(String visitaFecha) {
+        this.visitaFecha = visitaFecha;
+    }
+
+    public String getVisitaHora() {
+        return visitaHora;
+    }
+
+    public void setVisitaHora(String visitaHora) {
+        this.visitaHora = visitaHora;
+    }
+
+    public String getVisitaDescripcion() {
+        return visitaDescripcion;
+    }
+
+    public void setVisitaDescripcion(String visitaDescripcion) {
+        this.visitaDescripcion = visitaDescripcion;
     }
 }
