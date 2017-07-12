@@ -242,7 +242,7 @@ public class AdopcionesFragment extends Fragment {
                     mascotas = new ArrayList<>();
                     mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
                 } else {
-                    // Parsear el flujo con formato JSON
+                    // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(conDisponibles.getInputStream());
                     JsonMascotaParser parser = new JsonMascotaParser();
 
@@ -264,7 +264,7 @@ public class AdopcionesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Mascota> mascotas) {
             /*
-            Asignar los objetos de Json parseados al adaptador
+            Asignar los objetos de Json parseados al adaptadorDenuncias
              */
             if(mascotas!=null) {
                 adaptadorDisponibles = new adaptadorMascotasDisponibles(getActivity().getBaseContext(), mascotas);
@@ -338,7 +338,7 @@ public class AdopcionesFragment extends Fragment {
                     mascotas = new ArrayList<>();
                     mascotas.add(new AdopcionMascota(0, null, null, 0, 0, null, null, null, null, null, null, null, 0, null, null, null));
                 } else {
-                    // Parsear el flujo con formato JSON
+                    // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(conMisAdopciones.getInputStream());
                     JsonAdopcionMascotaParser parser = new JsonAdopcionMascotaParser();
 
@@ -360,7 +360,7 @@ public class AdopcionesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<AdopcionMascota> mascotas) {
             /*
-            Asignar los objetos de Json parseados al adaptador
+            Asignar los objetos de Json parseados al adaptadorDenuncias
              */
             if(mascotas!=null) {
                 adaptadorMisAdopciones = new adaptadorMascotasMisAdopciones(getActivity().getBaseContext(), mascotas);

@@ -9,7 +9,7 @@
     android:paddingTop="7dp">
 
     <ImageView
-        android:id="@+id/ivDenunciaItem_foto"
+        android:id="@+id/ivMiDenunciaItem_foto"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvDenunciaItem_titulo"
+                android:id="@+id/tvMiDenunciaItem_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -52,7 +52,7 @@
                 android:text="Denunciado el :" />
 
             <TextView
-                android:id="@+id/tvDenunciaItem_fecha"
+                android:id="@+id/tvMiDenunciaItem_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,7 +74,7 @@
                 android:text="Estado :" />
 
             <TextView
-                android:id="@+id/tvDenunciaItem_estado"
+                android:id="@+id/tvMiDenunciaItem_estado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,25 +89,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:text="Teléfono :" />
 
             <TextView
-                android:id="@+id/tvDenunciaItem_telefono"
+                android:id="@+id/tvMiDenunciaItem_telefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="976452166"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:id="@+id/btnDenunciaItem_llamar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/ic_phone_forwarded_black_24dp" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +108,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvDenunciaItem_descripcion"
+                android:id="@+id/tvMiDenunciaItem_descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
