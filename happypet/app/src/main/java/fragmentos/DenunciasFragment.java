@@ -1,14 +1,17 @@
 package fragmentos;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -51,6 +55,9 @@ public class DenunciasFragment extends Fragment {
     String USUARIO_ID;
     FloatingActionButton fab;
     TabHost thDenuncias;
+
+    String[] tiposDenuncias = {"TODAS", "MALTRATOS", "ACCIDENTES", "OTROS"};
+    private Spinner cbTipoDenuncias, cbTipoMisDenuncias;
 
     ProgressDialog progress;
     ListView listaDenuncias;
@@ -116,6 +123,9 @@ public class DenunciasFragment extends Fragment {
         });
 
         //====================== TAB DENUNCIAS ========================
+//        cbTipoDenuncias = (Spinner) me.findViewById(R.id.s_denuncia_tipo);
+//        cargarTipoDenuncias();
+
         listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
 
         cargarDenuncias("");
@@ -129,6 +139,9 @@ public class DenunciasFragment extends Fragment {
         });
 
         //====================== TAB MIS DENUNCIAS ========================
+        cbTipoMisDenuncias = (Spinner) me.findViewById(R.id.s_midenuncia_tipo);
+        cargarTipoMisDenuncias();
+
         listaMisDenuncias = (ListView) me.findViewById(R.id.lvMisDenuncias);
 
         cargarMisDenuncias("");
@@ -152,6 +165,15 @@ public class DenunciasFragment extends Fragment {
         if(requestCode == REQUEST_AgregarDenuncia){
             cargarDenuncias("");
         }
+    }
+
+    public void cargarTipoDenuncias(){
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getActivity() , android.R.layout.simple_spinner_dropdown_item, tiposDenuncias );
+        cbTipoDenuncias.setAdapter(ad);
+    }
+    public void cargarTipoMisDenuncias(){
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tiposDenuncias );
+        cbTipoMisDenuncias.setAdapter(ad);
     }
 
     public void cargarDenuncias(String filtro){
@@ -318,11 +340,26 @@ public class DenunciasFragment extends Fragment {
     }
 
 
-    public void llamar(final String phoneNumber) {
-        try{
-            startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
-        }catch (Exception e){
-            Toast.makeText(getActivity(), "Ocrrió un problema al intentar llamar al Telefono: " + phoneNumber + ". Inténtelo Ud. mismo de manera manual", Toast.LENGTH_LONG).show();
+    public void llamar(final String numeroTelefono) {
+//        try{
+//            startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
+//        }catch (Exception e){
+//            Toast.makeText(getActivity(), "Ocrrió un problema al intentar llamar al Telefono: " + phoneNumber + ". Inténtelo Ud. mismo de manera manual", Toast.LENGTH_LONG).show();
+//        }
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + numeroTelefono));
+            callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(callIntent);
+        }else{
+            Toast.makeText(getActivity().getBaseContext(), "Active manualmente sus permisos para hacer LLamadas" , Toast.LENGTH_LONG).show();
+            try {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + numeroTelefono));
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(getActivity().getBaseContext(), "No se pudo enviar el número de teléfono para que pueda llamar" , Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

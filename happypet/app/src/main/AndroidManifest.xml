@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STRORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.intent.action.CALL_PRIVILEGED" />
 
     <application
         android:allowBackup="true"
@@ -33,27 +35,24 @@
             android:name=".MismascotasActivity"
             android:label="@string/title_activity_mismascotas"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".MascotaAgregarActivity"
             android:label="@string/title_activity_mascota_agregar" />
         <activity android:name=".MainActivity" />
-
         <activity
             android:name=".SplashScreen"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MenuLateralActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_menu_lateral"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".MascotaDetalleActivity"
             android:configChanges="screenSize|orientation"
@@ -63,8 +62,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.MenuLateralActivity" />
         </activity>
-
-        <activity android:name=".UsuarioDetalleActivity"
+        <activity
+            android:name=".UsuarioDetalleActivity"
             android:configChanges="screenSize|orientation"
             android:label="FASE 1 de la Adopción"
             android:parentActivityName=".MascotaDetalleActivity">
@@ -72,38 +71,37 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.MascotaDetalleActivity" />
         </activity>
-
         <activity android:name=".AgregarMascotaEncontrada" />
-
         <activity android:name=".AgregarMascotaExtraviada" />
         <activity android:name=".MiCuenta" />
-
-        <activity android:name=".ProcesoAdopcion"
+        <activity
+            android:name=".ProcesoAdopcion"
             android:configChanges="screenSize|orientation"
             android:label="Estado de Adopción"
-            android:parentActivityName=".MenuLateralActivity"> >
+            android:parentActivityName=".MenuLateralActivity">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.MenuLateralActivity" />
         </activity>
-
         <activity android:name=".RegistrarDenuncia" />
-
         <activity
             android:name=".TerminosYCondicionesAdopcion"
             android:label="Terminos y Condiciones Adopción"
             android:noHistory="true" />
         <activity android:name=".TerminosyCondicionesCuenta" />
-
-        <activity android:name=".TestAdopcion"
+        <activity
+            android:name=".TestAdopcion"
             android:configChanges="screenSize|orientation"
             android:label="Test de Adopción"
-            android:parentActivityName=".ProcesoAdopcion"> >
+            android:parentActivityName=".ProcesoAdopcion">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.ProcesoAdopcion" />
         </activity>
-        <activity android:name=".EventosActivity"></activity>
+        <activity android:name=".EventosActivity" />
+        <activity android:name=".DenunciaAgregarActivity"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -67,13 +68,15 @@ public class AdopcionesFragment extends Fragment {
 
     TabHost thAdopciones;
 
+
+    // ---------mis adopciones -------
     private SwipeRefreshLayout scDisponibles;
     ListView listaDisponibles;
     ArrayAdapter adaptadorDisponibles;
     HttpURLConnection conDisponibles;
     ProgressDialog progressDisponibles;
 
-    // --------- mIS aDOOPCIONES -------
+
     private SwipeRefreshLayout scMisAdopciones;
     ListView listaMisAdopciones;
     ArrayAdapter adaptadorMisAdopciones;
@@ -103,6 +106,7 @@ public class AdopcionesFragment extends Fragment {
         thAdopciones.addTab(tabMis);
 
         // ------------ TAB DISPONIBLES -------------
+
         scDisponibles = (SwipeRefreshLayout) me.findViewById(R.id.srlMascotasDisponibles);
         scDisponibles.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -139,6 +143,7 @@ public class AdopcionesFragment extends Fragment {
 
 
         // ------------ TAB MIS ADOPCIONES -------------
+
         scMisAdopciones = (SwipeRefreshLayout) me.findViewById(R.id.srlMisAdopciones);
         scMisAdopciones.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -184,6 +189,7 @@ public class AdopcionesFragment extends Fragment {
 
         return  me;
     }
+
 
 
     //====================== DATA ADOPCIONES ===========================
