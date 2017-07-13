@@ -123,20 +123,20 @@ public class DenunciasFragment extends Fragment {
         });
 
         //====================== TAB DENUNCIAS ========================
-//        cbTipoDenuncias = (Spinner) me.findViewById(R.id.s_denuncia_tipo);
-//        cargarTipoDenuncias();
+        cbTipoDenuncias = (Spinner) me.findViewById(R.id.s_denuncia_tipo);
+        cargarTipoDenuncias();
 
         listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
 
         cargarDenuncias("");
-        swipeContainer = (SwipeRefreshLayout) me.findViewById(R.id.srlContainerDenuncias);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                cargarDenuncias("");
-                swipeContainer.setRefreshing(false);
-            }
-        });
+//        swipeContainer = (SwipeRefreshLayout) me.findViewById(R.id.srlContainerDenuncias);
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                cargarDenuncias("");
+//                swipeContainer.setRefreshing(false);
+//            }
+//        });
 
         //====================== TAB MIS DENUNCIAS ========================
         cbTipoMisDenuncias = (Spinner) me.findViewById(R.id.s_midenuncia_tipo);
