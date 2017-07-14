@@ -5,17 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <ListView
-        android:id="@+id/lvMisDenuncias"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        android:background="#f4f4f4"
-        android:divider="#E5E5E5"
-        android:dividerHeight="3dp"
-        android:scrollbars="vertical"
-        android:clickable="true"
-        android:focusable="false"
-        android:touchscreenBlocksFocus="true" />
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/s_denuncia_tipo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1" />
+
+        <ListView
+            android:id="@+id/lvMisDenuncias"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f4f4f4"
+            android:clickable="true"
+            android:divider="#E5E5E5"
+            android:dividerHeight="3dp"
+            android:focusable="false"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            android:touchscreenBlocksFocus="true" />
+    </LinearLayout>
+
 </android.support.v4.widget.SwipeRefreshLayout>

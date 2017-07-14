@@ -84,7 +84,8 @@ public class JsonDenunciasParser {
                     telefono = reader.nextString();
                     break;
                 case "estado":
-                    estado = reader.nextString() == "1" ? true : false;
+                    String cadenaEstado = reader.nextString();
+                    estado = cadenaEstado.equals("1") ? true : false;
                     break;
                 case "id_usuario":
                     usuarioId = Integer.parseInt(reader.nextString());

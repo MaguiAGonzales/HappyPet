@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -67,13 +68,15 @@ public class AdopcionesFragment extends Fragment {
 
     TabHost thAdopciones;
 
+
+    // ---------mis adopciones -------
     private SwipeRefreshLayout scDisponibles;
     ListView listaDisponibles;
     ArrayAdapter adaptadorDisponibles;
     HttpURLConnection conDisponibles;
     ProgressDialog progressDisponibles;
 
-    // --------- mIS aDOOPCIONES -------
+
     private SwipeRefreshLayout scMisAdopciones;
     ListView listaMisAdopciones;
     ArrayAdapter adaptadorMisAdopciones;
@@ -103,6 +106,7 @@ public class AdopcionesFragment extends Fragment {
         thAdopciones.addTab(tabMis);
 
         // ------------ TAB DISPONIBLES -------------
+
         scDisponibles = (SwipeRefreshLayout) me.findViewById(R.id.srlMascotasDisponibles);
         scDisponibles.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -139,6 +143,7 @@ public class AdopcionesFragment extends Fragment {
 
 
         // ------------ TAB MIS ADOPCIONES -------------
+
         scMisAdopciones = (SwipeRefreshLayout) me.findViewById(R.id.srlMisAdopciones);
         scMisAdopciones.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -184,6 +189,7 @@ public class AdopcionesFragment extends Fragment {
 
         return  me;
     }
+
 
 
     //====================== DATA ADOPCIONES ===========================
@@ -242,7 +248,7 @@ public class AdopcionesFragment extends Fragment {
                     mascotas = new ArrayList<>();
                     mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
                 } else {
-                    // Parsear el flujo con formato JSON
+                    // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(conDisponibles.getInputStream());
                     JsonMascotaParser parser = new JsonMascotaParser();
 
@@ -264,7 +270,7 @@ public class AdopcionesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Mascota> mascotas) {
             /*
-            Asignar los objetos de Json parseados al adaptador
+            Asignar los objetos de Json parseados al adaptadorDenuncias
              */
             if(mascotas!=null) {
                 adaptadorDisponibles = new adaptadorMascotasDisponibles(getActivity().getBaseContext(), mascotas);
@@ -338,7 +344,7 @@ public class AdopcionesFragment extends Fragment {
                     mascotas = new ArrayList<>();
                     mascotas.add(new AdopcionMascota(0, null, null, 0, 0, null, null, null, null, null, null, null, 0, null, null, null));
                 } else {
-                    // Parsear el flujo con formato JSON
+                    // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(conMisAdopciones.getInputStream());
                     JsonAdopcionMascotaParser parser = new JsonAdopcionMascotaParser();
 
@@ -360,7 +366,7 @@ public class AdopcionesFragment extends Fragment {
         @Override
         protected void onPostExecute(List<AdopcionMascota> mascotas) {
             /*
-            Asignar los objetos de Json parseados al adaptador
+            Asignar los objetos de Json parseados al adaptadorDenuncias
              */
             if(mascotas!=null) {
                 adaptadorMisAdopciones = new adaptadorMascotasMisAdopciones(getActivity().getBaseContext(), mascotas);

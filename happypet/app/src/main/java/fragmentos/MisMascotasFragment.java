@@ -132,7 +132,7 @@ public class MisMascotasFragment extends Fragment {
     public class JsonTask extends AsyncTask<URL, Void, List<Mascota>> {
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), "", "Cargando la lista de Mascotas...");
+            progress = ProgressDialog.show(getActivity(), "", "Cargando la listaDenuncias de Mascotas...");
         }
 
         @Override
@@ -155,7 +155,7 @@ public class MisMascotasFragment extends Fragment {
                     mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
                 } else {
 //                    System.out.println("a leer el msje json");
-                    // Parsear el flujo con formato JSON
+                    // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(con.getInputStream());
 
                     JsonMascotaParser parser = new JsonMascotaParser();

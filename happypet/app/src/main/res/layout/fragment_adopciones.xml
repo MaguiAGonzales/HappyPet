@@ -41,15 +41,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#f4f4f4"
-                            android:clickable="true"
                             android:divider="#E5E5E5"
-                            android:dividerHeight="3dp"
-                            android:focusable="false"
+                            android:dividerHeight="2dp"
                             android:padding="5dp"
-                            android:scrollbars="vertical"
-                            android:touchscreenBlocksFocus="true" />
+                            android:scrollbars="vertical"/>
 
                     </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
                 </LinearLayout>
 
@@ -69,13 +68,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#f4f4f4"
-                            android:clickable="true"
                             android:divider="#E5E5E5"
-                            android:dividerHeight="3dp"
-                            android:focusable="false"
+                            android:dividerHeight="2dp"
                             android:padding="5dp"
-                            android:scrollbars="vertical"
-                            android:touchscreenBlocksFocus="true" />
+                            android:scrollbars="vertical" />
 
                     </android.support.v4.widget.SwipeRefreshLayout>
 
