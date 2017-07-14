@@ -17,12 +17,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.happypet.movil.happypet.DenunciaAgregarActivity;
 import com.happypet.movil.happypet.R;
 
 import java.io.BufferedInputStream;
@@ -37,6 +39,8 @@ import adaptadores.adaptadorDenuncias;
 import adaptadores.adaptadorMisDenuncias;
 import clases.Denuncia;
 import parseadores.JsonDenunciasParser;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +76,7 @@ public class DenunciasFragment extends Fragment {
     private SwipeRefreshLayout swipeContainerMisDenuncias;
 
 
-    private int REQUEST_AgregarDenuncia = 0;
+    private int REQUEST_AgregarDenuncia = 10;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,9 +108,9 @@ public class DenunciasFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent (view.getContext(), MascotaAgregarActivity.class );
-//                intent.putExtra("id", USUARIO_ID);
-//                startActivityForResult(intent, REQUEST_AgregarDenuncia);
+                Intent intent = new Intent (view.getContext(), DenunciaAgregarActivity.class );
+                intent.putExtra("idUsuario", USUARIO_ID);
+                startActivityForResult(intent, REQUEST_AgregarDenuncia);
             }
         });
 
@@ -126,44 +130,59 @@ public class DenunciasFragment extends Fragment {
         cbTipoDenuncias = (Spinner) me.findViewById(R.id.s_denuncia_tipo);
         cargarTipoDenuncias();
 
-        listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
+        cbTipoDenuncias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String  tipoSel=cbTipoDenuncias.getSelectedItem().toString();
+                cargarDenuncias(tipoSel);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
-        cargarDenuncias("");
-//        swipeContainer = (SwipeRefreshLayout) me.findViewById(R.id.srlContainerDenuncias);
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                cargarDenuncias("");
-//                swipeContainer.setRefreshing(false);
-//            }
-//        });
+        listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
 
         //====================== TAB MIS DENUNCIAS ========================
         cbTipoMisDenuncias = (Spinner) me.findViewById(R.id.s_midenuncia_tipo);
         cargarTipoMisDenuncias();
 
-        listaMisDenuncias = (ListView) me.findViewById(R.id.lvMisDenuncias);
-
-        cargarMisDenuncias("");
-        swipeContainerMisDenuncias = (SwipeRefreshLayout) me.findViewById(R.id.srlContainerMisDenuncias);
-        swipeContainerMisDenuncias.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        cbTipoMisDenuncias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onRefresh() {
-                cargarMisDenuncias("");
-                swipeContainerMisDenuncias.setRefreshing(false);
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String  tipoSel=cbTipoMisDenuncias.getSelectedItem().toString();
+                cargarMisDenuncias(tipoSel);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
             }
         });
 
-
+        listaMisDenuncias = (ListView) me.findViewById(R.id.lvMisDenuncias);
 
         return me;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_AgregarDenuncia){
-            cargarDenuncias("");
+        System.out.println("ReqC  :  " + String.valueOf(REQUEST_AgregarDenuncia));
+        System.out.println("Res  :  " + String.valueOf(resultCode));
+//        System.out.println("MSG  :  " + data.getStringExtra("msg"));
+//        System.out.println("OK  :  " + data.getStringExtra("success"));
+        if (requestCode == REQUEST_AgregarDenuncia) {
+//            if (resultCode == RESULT_OK) {
+//                String mensaje=data.getStringExtra("msg");
+//                String ok=data.getStringExtra("success");
+//
+//                Toast.makeText(
+//                        getActivity().getBaseContext(),
+//                        mensaje,
+//                        Toast.LENGTH_LONG)
+//                        .show();
+//            }
+            cargarMisDenuncias("");
         }
     }
 
@@ -176,6 +195,7 @@ public class DenunciasFragment extends Fragment {
         cbTipoMisDenuncias.setAdapter(ad);
     }
 
+
     public void cargarDenuncias(String filtro){
         try {
             ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -184,7 +204,7 @@ public class DenunciasFragment extends Fragment {
 
             if (networkInfo != null && networkInfo.isConnected()) {
                 String filtroInicio = "?f=listar";
-//                filtro = filtro.equals("")?"":"&nombre=" + filtro;
+                filtro = filtro.equals("")?"":"&tipo=" + filtro;
                 String protocolo = "http://";
                 String ip = getResources().getString(R.string.ipweb);
                 String puerto = getResources().getString(R.string.puertoweb);
@@ -266,7 +286,7 @@ public class DenunciasFragment extends Fragment {
 
             if (networkInfo != null && networkInfo.isConnected()) {
                 String filtroInicio = "?f=listar&id=" + USUARIO_ID;
-//                filtro = filtro.equals("")?"":"&nombre=" + filtro;
+                filtro = filtro.equals("")?"":"&tipo=" + filtro;
                 String protocolo = "http://";
                 String ip = getResources().getString(R.string.ipweb);
                 String puerto = getResources().getString(R.string.puertoweb);

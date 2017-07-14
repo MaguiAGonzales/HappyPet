@@ -14,11 +14,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.happypet.movil.happypet.MascotaAgregarActivity;
+import com.happypet.movil.happypet.MascotaDetalle2Activity;
+import com.happypet.movil.happypet.MascotaDetalleActivity;
 import com.happypet.movil.happypet.MismascotasActivity;
 import com.happypet.movil.happypet.R;
 
@@ -76,6 +79,32 @@ public class MisMascotasFragment extends Fragment {
 
         lista = (ListView) me.findViewById(R.id.lvMascotas);
         cargar("");
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
+                Mascota mascotaSel = (Mascota) pariente.getItemAtPosition(posicion);
+
+                Intent intent = new Intent(getContext(), MascotaDetalle2Activity.class);
+                intent.putExtra("idUsuario", USUARIO_ID);
+
+                intent.putExtra("id", String.valueOf(mascotaSel.getIdMascota()));
+                intent.putExtra("foto", mascotaSel.getImagen());
+                intent.putExtra("nombre", mascotaSel.getNombre());
+                intent.putExtra("tipo", mascotaSel.getTipo());
+                intent.putExtra("sexo", mascotaSel.getSexo());
+                intent.putExtra("particularidad", mascotaSel.getParticularidades());
+                intent.putExtra("salud", mascotaSel.getSalud());
+                intent.putExtra("tamanio", mascotaSel.getTamanio());
+                intent.putExtra("nacimiento", mascotaSel.getAnio() );
+                intent.putExtra("edad", String.valueOf(mascotaSel.getEdad()) );
+                intent.putExtra("adoptado", mascotaSel.getAdoptado() );
+                intent.putExtra("esterelizado", mascotaSel.getEsterelizado() );
+                System.out.println("asignado todos los paramateros");
+                startActivity(intent);
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) me.findViewById(R.id.btnAgregarMascota);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +181,7 @@ public class MisMascotasFragment extends Fragment {
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
+                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,null,null,1));
                 } else {
 //                    System.out.println("a leer el msje json");
                     // Parsear el flujo conDenuncias formato JSON

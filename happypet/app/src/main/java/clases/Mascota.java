@@ -13,21 +13,25 @@ public class Mascota {
     private String sexo;
     private String particularidades;
     private String salud;
+    private String tamanio;
     private String anio;
     private String adoptado;
+    private String esterelizado;
     private String imagen;
     private String origen;
     private int usuarioId;
 
-    public Mascota(int idMascota, String nombre, String tipo, String sexo, String particularidades, String salud, String anio, String adoptado, String imagen, String origen, int usuarioId) {
+    public Mascota(int idMascota, String nombre, String tipo, String sexo, String particularidades, String salud, String tamanio, String anio, String adoptado, String esterelizado, String imagen, String origen, int usuarioId) {
         this.idMascota = idMascota;
         this.nombre = nombre;
         this.tipo = tipo;
         this.sexo = sexo;
         this.particularidades = particularidades;
         this.salud = salud;
+        this.tamanio = tamanio;
         this.anio = anio;
         this.adoptado = adoptado;
+        this.esterelizado = esterelizado;
         this.imagen = imagen;
         this.origen = origen;
         this.usuarioId = usuarioId;
@@ -123,8 +127,22 @@ public class Mascota {
 
     public int getEdad(){
         int anioActual = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())) ;
-//        Calendar calendar = Calendar.getInstance();
-//        int anioActual = calendar.get(Calendar.YEAR);
         return anioActual - Integer.parseInt(this.anio);
+    }
+
+    public String getEsterelizado() {
+        return esterelizado;
+    }
+
+    public void setEsterelizado(String esterelizado) {
+        this.esterelizado = esterelizado;
+    }
+
+    public String getTamanio() {
+        return tamanio;
+    }
+
+    public void setTamanio(String tamanio) {
+        this.tamanio = tamanio;
     }
 }

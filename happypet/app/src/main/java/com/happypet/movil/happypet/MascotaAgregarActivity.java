@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,8 +39,8 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
     String encodedImage, foto, funcion;
     DataConnection dc;
 
-    private EditText tbNombre, tbAnio, tbParti ,tbSalud;
-    private RadioButton rbAdoptadoSI;
+    private EditText tbNombre, tbAnio, tbParti ,tbSalud, tbTamanio;
+    private RadioButton rbAdoptadoSI, rbEsterilizadoSI;
 
     static MascotaAgregarActivity me;
 
@@ -49,6 +50,8 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mascota_agregar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent myIntent = getIntent();
         USUARIO_ID = myIntent.getStringExtra("id");
@@ -73,7 +76,9 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
         tbAnio = (EditText) findViewById(R.id.etFechaNacimiento);
         tbParti = (EditText) findViewById(R.id.etParticularidadMacota);
         tbSalud = (EditText) findViewById(R.id.etSaludMascota);
+        tbTamanio = (EditText) findViewById(R.id.etTamanioMascota);
         rbAdoptadoSI = (RadioButton) findViewById(R.id.rbAdoptadoSi);
+        rbEsterilizadoSI = (RadioButton) findViewById(R.id.rbEsterilizadoSi);
 
         me = this;
 
@@ -88,13 +93,26 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
                 String anio = tbAnio.getText().toString();
                 String parti = tbParti.getText().toString();
                 String salud = tbSalud.getText().toString();
+                String tamanio = tbTamanio.getText().toString();
                 String adoptado = rbAdoptadoSI.isChecked() ? "1":"0";
+                String esterilizado = rbEsterilizadoSI.isChecked() ? "1":"0";
 
-                dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, adoptado, USUARIO_ID);
+                dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, tamanio, adoptado, esterilizado, USUARIO_ID);
             }
         });
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void cargarTipos(){
         ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tipos );
         cbTipo.setAdapter(ad);

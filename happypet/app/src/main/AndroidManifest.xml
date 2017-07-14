@@ -90,18 +90,36 @@
             android:label="Terminos y Condiciones Adopción"
             android:noHistory="true" />
         <activity android:name=".TerminosyCondicionesCuenta" />
+
         <activity
             android:name=".TestAdopcion"
             android:configChanges="screenSize|orientation"
             android:label="Test de Adopción"
             android:parentActivityName=".ProcesoAdopcion">
-            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.happypet.movil.happypet.ProcesoAdopcion" />
         </activity>
+
         <activity android:name=".EventosActivity" />
-        <activity android:name=".DenunciaAgregarActivity"></activity>
+
+        <activity android:name=".DenunciaAgregarActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="Agregar Denuncia"
+            android:parentActivityName=".MenuLateralActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.MenuLateralActivity" />
+        </activity>
+
+        <activity android:name=".MascotaDetalle2Activity"
+            android:configChanges="screenSize|orientation"
+            android:label="Detalle de Mascota"
+            android:parentActivityName=".MenuLateralActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.happypet.movil.happypet.MenuLateralActivity" />
+        </activity>
     </application>
 
 </manifest>

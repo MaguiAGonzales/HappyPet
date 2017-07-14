@@ -129,7 +129,7 @@ public class MismascotasActivity extends AppCompatActivity implements SwipeRefre
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
+                    mascotas.add(new Mascota(0,"",null,null,null, null,null,null,null,null,null,null,1));
                 } else {
 //                    System.out.println("a leer el msje json");
                     // Parsear el flujo con formato JSON

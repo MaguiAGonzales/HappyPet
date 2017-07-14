@@ -246,7 +246,7 @@ public class AdopcionesFragment extends Fragment {
 
                 if(statusCode!=200) {
                     mascotas = new ArrayList<>();
-                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,1));
+                    mascotas.add(new Mascota(0,"",null,null,null,null,null,null,null,null,null,null,1));
                 } else {
                     // Parsear el flujo conDenuncias formato JSON
                     InputStream in = new BufferedInputStream(conDisponibles.getInputStream());

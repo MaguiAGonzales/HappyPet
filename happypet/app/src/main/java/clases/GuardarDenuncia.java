@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaCodec;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -26,48 +25,42 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.regex.Pattern;
-
-import adaptadores.adaptadorMascotasDisponibles;
 
 
-public class DataConnection extends AppCompatActivity {
-    String nombre, tipo, sexo, anio, particularidades, salud, tamanio, adoptado, esterilizado, idUsuario;
 
-    String funcion, encodedImage, data, image, cargarDatos;
-    Activity context;
-    ArrayList<DatosImage> listaImage = new ArrayList();
-    DatosImage dataImage;
-    JSONObject json_data;
+public class GuardarDenuncia extends AppCompatActivity{
 
-    Boolean ok;
-    String msg;
+        String tipo, fecha, titulo, descripcion, telefono, estado, idUsuario;
 
-    Intent intenPadre;
-    ProgressDialog progress;
+        String funcion, encodedImage, data, image, cargarDatos;
+        Activity context;
+        ArrayList<DatosImage> listaImage = new ArrayList();
+        DatosImage dataImage;
+        JSONObject json_data;
 
-    public DataConnection(Activity context, String funcion, String encodedImage,  String nombre, String tipo, String sexo, String anio, String particularidades, String salud, String tamanio, String adoptado, String esterilizado, String idUsuario){
+        Boolean ok;
+        String msg;
+
+        Intent intenPadre;
+        ProgressDialog progress;
+
+    public GuardarDenuncia(Activity context, String funcion, String encodedImage, String fecha,  String tipo, String titulo, String descripcion, String telefono, String estado, String idUsuario){
         this.context = context;
         this.funcion = funcion;
         this.encodedImage = encodedImage;
 
-        this.nombre = nombre;
+        this.fecha = fecha;
         this.tipo = tipo;
-        this.sexo = sexo;
-        this.anio = anio;
-        this.particularidades = particularidades;
-        this.salud = salud;
-        this.tamanio = tamanio;
-        this.adoptado = adoptado;
-        this.esterilizado = esterilizado;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.telefono = telefono;
+        this.estado = estado;
         this.idUsuario = idUsuario;
 
         this.ok = false;
         this.msg = "";
 
-        new GetAndSet(this.context).execute();
+        new GuardarDenuncia.GetAndSet(this.context).execute();
     }
 
     private String obtenerDatos(){
@@ -78,25 +71,20 @@ public class DataConnection extends AppCompatActivity {
             String ip = this.context.getResources().getString(R.string.ipweb);
             String puerto = this.context.getResources().getString(R.string.puertoweb);
             puerto = puerto.equals("") ? "" : ":" + puerto;
-            String rutaUrl = protocolo + ip + puerto + "/happypet-web/funciones/admin_mascota.php";
+            String rutaUrl = protocolo + ip + puerto + "/happypet-web/funciones/admin_denuncia.php";
 
             URL obj = new URL( rutaUrl);
-            System.out.println("Funcion: " + funcion);
-            if (funcion.equals("setImage")){
+            if (funcion.equals("insertar")){
                 data = "f=" + URLEncoder.encode(funcion, "UTF-8")
-                        + "&nombre=" + URLEncoder.encode(nombre, "UTF-8")
+                        + "&fecha=" + URLEncoder.encode(fecha, "UTF-8")
                         + "&tipo=" + URLEncoder.encode(tipo, "UTF-8")
-                        + "&sexo=" + URLEncoder.encode(sexo, "UTF-8")
-                        + "&anio=" + URLEncoder.encode(anio, "UTF-8")
-                        + "&particularidades=" + URLEncoder.encode(particularidades, "UTF-8")
-                        + "&salud=" + URLEncoder.encode(salud, "UTF-8")
-                        + "&tamanio=" + URLEncoder.encode(tamanio, "UTF-8")
-                        + "&adoptado=" + URLEncoder.encode(this.adoptado, "UTF-8")
-                        + "&esterilizado=" + URLEncoder.encode(this.esterilizado, "UTF-8")
-                        + "&adoptable=0"
-                        + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8")
+                        + "&titulo=" + URLEncoder.encode(titulo, "UTF-8")
+                        + "&descripcion=" + URLEncoder.encode(descripcion, "UTF-8")
+                        + "&telefono=" + URLEncoder.encode(telefono, "UTF-8")
+                        + "&estado=" + URLEncoder.encode(estado, "UTF-8")
+                        + "&foto=" + URLEncoder.encode(encodedImage, "UTF-8")
                         + "&id_usuario=" + this.idUsuario;
-//                System.out.println("datos obtenerdatos -------- >    " + data);
+                System.out.println("datos obtenerdatos -------- >    " + data);
             }
 
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -106,6 +94,9 @@ public class DataConnection extends AppCompatActivity {
 
             con.setFixedLengthStreamingMode(data.getBytes().length);
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            System.out.println("Direccion ----> " + con.getURL().toString());
+
             OutputStream out = new BufferedOutputStream(con.getOutputStream());
             out.write(data.getBytes());
             out.flush();
@@ -138,7 +129,7 @@ public class DataConnection extends AppCompatActivity {
         System.out.println("RESPUESTA -------- >    " + cargarDatos.toString());
         try{
             if(!cargarDatos.equalsIgnoreCase("")){
-                if(funcion.equals("setImage")){
+                if(funcion.equals("insertar")){
                     json_data = new JSONObject(cargarDatos);
                     ok =  Boolean.valueOf(json_data.getString("success"));
                     msg = json_data.getString("msg");
@@ -146,7 +137,9 @@ public class DataConnection extends AppCompatActivity {
                 return true;
             }
         }catch (JSONException e){
+            if (progress.isShowing()) { progress.dismiss();}
             e.printStackTrace();
+
         }
         return false;
     }
@@ -154,22 +147,25 @@ public class DataConnection extends AppCompatActivity {
     private void actividad(){
         progress.dismiss();
 
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("msg",msg);
+        returnIntent.putExtra("success", String.valueOf(ok));
+        setResult(Activity.RESULT_OK,returnIntent);
+//        setResult(2, intenPadre);
 
-//        if(ok){
-            setResult(2, intenPadre);
-//        }else{
-//            setResult(RESULT_CANCELED);
-//        }
+        if(ok){
+            Toast.makeText(
+                    context,
+                    "Denuncia Guardada Correctamente",
+                    Toast.LENGTH_LONG)
+                    .show();
+        }
 
         context.finish();
-
-        if(funcion.equals("insert")){
-            Toast.makeText(context, "Imagen Insertada al servidor ", Toast.LENGTH_LONG).show();
-        }
     }
 
-    class GetAndSet extends AsyncTask<String, String, String>{
+    class GetAndSet extends AsyncTask<String, String, String> {
         private Context myContext;
 
         public GetAndSet(Context context){
@@ -178,7 +174,7 @@ public class DataConnection extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(this.myContext, "", "Cargando Mascotas Disponibles...");
+            progress = ProgressDialog.show(this.myContext, "", "Guarando Denuncia...");
         }
 
         @Override

@@ -56,8 +56,10 @@ public class JsonMascotaParser {
         String sexo = null;
         String particularidades = null;
         String salud = null;
+        String tamanio = null;
         String anio = null;
         String adoptado = null;
+        String esterilizado = null;
         String imagen = null;
         String origen = null;
         Integer usuarioId = 0;
@@ -91,6 +93,9 @@ public class JsonMascotaParser {
                 case "salud":
                     salud = reader.nextString();
                     break;
+                case "tamano":
+                    tamanio = reader.nextString();
+                    break;
                 case "ano_nacimiento":
                     anio = reader.nextString();
                     break;
@@ -99,6 +104,9 @@ public class JsonMascotaParser {
                     break;
                 case "es_adoptado":
                     adoptado = reader.nextString();
+                    break;
+                case "esterilizado":
+                    esterilizado = reader.nextString();
                     break;
                 case "imagen":
                     imagen = reader.nextString();
@@ -109,7 +117,7 @@ public class JsonMascotaParser {
             }
         }
         reader.endObject();
-//        System.out.println(nombre);
-        return new Mascota(idMascota,nombre,tipo,sexo,particularidades,salud,anio,adoptado,imagen,origen,usuarioId);
+//        System.out.println("TAMAÑO ---------->  " + tamanio);
+        return new Mascota(idMascota,nombre,tipo,sexo,particularidades,salud,tamanio,anio,adoptado,esterilizado,imagen,origen,usuarioId);
     }
 }

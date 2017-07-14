@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/srlContainerMisDenuncias"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <LinearLayout
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/s_midenuncia_tipo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="70dp"
+        android:layout_margin="5dp"
+        android:drawSelectorOnTop="true"
+        android:layout_weight="1" />
 
-        <Spinner
-            android:id="@+id/s_denuncia_tipo"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
 
-        <ListView
-            android:id="@+id/lvMisDenuncias"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#f4f4f4"
-            android:clickable="true"
-            android:divider="#E5E5E5"
-            android:dividerHeight="3dp"
-            android:focusable="false"
-            android:padding="5dp"
-            android:scrollbars="vertical"
-            android:touchscreenBlocksFocus="true" />
-    </LinearLayout>
+        <!--<android.support.v4.widget.SwipeRefreshLayout-->
+            <!--android:id="@+id/srlContainerMisDenuncias"-->
 
-</android.support.v4.widget.SwipeRefreshLayout>
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+            <ListView
+                android:id="@+id/lvMisDenuncias"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:divider="#E5E5E5"
+                android:dividerHeight="2dp"
+                android:focusable="false"
+                android:padding="5dp"
+                android:scrollbars="vertical"
+                android:touchscreenBlocksFocus="true" />
+
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <!--</LinearLayout>-->
+
+</LinearLayout>
+
