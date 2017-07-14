@@ -34,6 +34,9 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
     String[] sexos = {"Hembra", "Macho"};
     private Spinner cbSexo;
 
+    String[] tamanios = {"pequeño", "mediano" , "grande"};
+    private Spinner cbTamanios;
+
     ImageView img;
     private final int PICKER = 1;
     String encodedImage, foto, funcion;
@@ -73,10 +76,12 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
         cbSexo = (Spinner) findViewById(R.id.sSexoMascota);
         cargarSexos();
 
+        cbTamanios = (Spinner) findViewById(R.id.sTamanio);
+        cargarTamanios();
+
         tbAnio = (EditText) findViewById(R.id.etFechaNacimiento);
         tbParti = (EditText) findViewById(R.id.etParticularidadMacota);
         tbSalud = (EditText) findViewById(R.id.etSaludMascota);
-        tbTamanio = (EditText) findViewById(R.id.etTamanioMascota);
         rbAdoptadoSI = (RadioButton) findViewById(R.id.rbAdoptadoSi);
         rbEsterilizadoSI = (RadioButton) findViewById(R.id.rbEsterilizadoSi);
 
@@ -93,9 +98,11 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
                 String anio = tbAnio.getText().toString();
                 String parti = tbParti.getText().toString();
                 String salud = tbSalud.getText().toString();
-                String tamanio = tbTamanio.getText().toString();
+                String tamanio = cbTamanios.getSelectedItem().toString();
                 String adoptado = rbAdoptadoSI.isChecked() ? "1":"0";
                 String esterilizado = rbEsterilizadoSI.isChecked() ? "1":"0";
+
+                System.out.println("TAMAÑO  ->  " + tamanio);
 
                 dc = new DataConnection(MascotaAgregarActivity.this, funcion, encodedImage, nombre, tipo, sexo, anio, parti, salud, tamanio, adoptado, esterilizado, USUARIO_ID);
             }
@@ -121,6 +128,11 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
     public void cargarSexos(){
         ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, sexos );
         cbSexo.setAdapter(ad);
+    }
+
+    public void cargarTamanios(){
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tamanios );
+        cbTamanios.setAdapter(ad);
     }
 
     @Override
@@ -179,4 +191,6 @@ public class MascotaAgregarActivity extends AppCompatActivity implements View.On
             }
         }
     }
+
+
 }

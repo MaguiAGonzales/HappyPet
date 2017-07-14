@@ -36,9 +36,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adaptadores.adaptadorDenuncias;
+import adaptadores.adaptadorExtraviados;
 import adaptadores.adaptadorMisDenuncias;
 import clases.Denuncia;
+import clases.Extraviado;
 import parseadores.JsonDenunciasParser;
+import parseadores.JsonExtraviadosParser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,9 +65,9 @@ public class AlertasFragment extends Fragment {
     private Spinner cbTipoDenuncias, cbTipoMisDenuncias;
 
     ProgressDialog progress;
-    ListView listaDenuncias;
-    ArrayAdapter adaptadorDenuncias;
-    HttpURLConnection conDenuncias;
+    ListView listaAlertas;
+    ArrayAdapter adaptadorAlertas;
+    HttpURLConnection conAlertas;
     private SwipeRefreshLayout swipeContainer;
 
     ProgressDialog progressMisDenuncias;
@@ -135,7 +138,7 @@ public class AlertasFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 String  tipoSel=cbTipoDenuncias.getSelectedItem().toString();
-//                cargarDenuncias(tipoSel);
+                cargarAlertas(tipoSel);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -143,7 +146,7 @@ public class AlertasFragment extends Fragment {
             }
         });
 
-        listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
+        listaAlertas = (ListView) me.findViewById(R.id.lvAlertas);
 
 //        //====================== TAB MIS DENUNCIAS ========================
         cbTipoMisDenuncias = (Spinner) me.findViewById(R.id.s_mialerta_tipo);
@@ -184,87 +187,88 @@ public class AlertasFragment extends Fragment {
     }
 
 
-//    public void cargarDenuncias(String filtro){
-//        try {
-//            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//
-//            if (networkInfo != null && networkInfo.isConnected()) {
-//                String filtroInicio = "?f=listar";
+    public void cargarAlertas(String filtro){
+        try {
+            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected()) {
+                String filtroInicio = "?f=listar";
 //                filtro = filtro.equals("")?"":"&tipo=" + filtro;
-//                String protocolo = "http://";
-//                String ip = getResources().getString(R.string.ipweb);
-//                String puerto = getResources().getString(R.string.puertoweb);
-//                puerto = puerto.equals("") ? "" : ":" + puerto;
-//
-//                String url = protocolo + ip + puerto +  "/happypet-web/funciones/admin_denuncia.php" +filtroInicio + filtro;
-//                System.out.println("direccion ------      " + url);
-//
-//                new JsonTask().execute(new URL(url) );
-//            } else {
-//                Toast.makeText(getActivity(), "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
-//            }
-//
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public class JsonTask extends AsyncTask<URL, Void, List<Denuncia>> {
-//        @Override
-//        protected void onPreExecute() {
-//            progress = ProgressDialog.show(getActivity(), "", "Cargando las Denuncias...");
-//        }
-//
-//        @Override
-//        protected List<Denuncia> doInBackground(URL... urls) {
-//            List<Denuncia> denuncias = null;
-//
-//            try {
-//                // Establecer la conexión
-//                conDenuncias = (HttpURLConnection)urls[0].openConnection();
-//                conDenuncias.setConnectTimeout(15000);
-//                conDenuncias.setReadTimeout(10000);
-//
-//                // Obtener el estado del recurso
-//                int statusCode = conDenuncias.getResponseCode();
-//
-//                if(statusCode!=200) {
-//                    denuncias = new ArrayList<>();
-//                    denuncias.add(new Denuncia());
-//                } else {
-//                    InputStream in = new BufferedInputStream(conDenuncias.getInputStream());
-//
-//                    JsonDenunciasParser parser = new JsonDenunciasParser();
-//
-//                    denuncias = parser.leerFlujoJson(in);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }finally {
-//                conDenuncias.disconnect();
-//            }
-//            //System.out.println(denuncias);
-//            return denuncias;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Denuncia> denuncias) {
-//            if(denuncias!=null) {
-//                adaptadorDenuncias = new adaptadorDenuncias(getActivity().getBaseContext(), denuncias, DenunciasFragment.this);
-//                listaDenuncias.setAdapter(adaptadorDenuncias);
-//            }else{
-//                Toast.makeText(
-//                        getActivity().getBaseContext(),
-//                        "Ocurrió un error de Parsing Json en Denuncias",
-//                        Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//            if (progress.isShowing()) { progress.dismiss(); }
-//
-//        }
-//    }
+                filtro = "";
+                String protocolo = "http://";
+                String ip = getResources().getString(R.string.ipweb);
+                String puerto = getResources().getString(R.string.puertoweb);
+                puerto = puerto.equals("") ? "" : ":" + puerto;
+
+                String url = protocolo + ip + puerto +  "/happypet-web/funciones/admin_extraviado.php" +filtroInicio + filtro;
+                System.out.println("direccion ------      " + url);
+
+                new JsonTask().execute(new URL(url) );
+            } else {
+                Toast.makeText(getActivity(), "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class JsonTask extends AsyncTask<URL, Void, List<Extraviado>> {
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(getActivity(), "", "Cargando las Alertas...");
+        }
+
+        @Override
+        protected List<Extraviado> doInBackground(URL... urls) {
+            List<Extraviado> estraviados = null;
+
+            try {
+                // Establecer la conexión
+                conAlertas = (HttpURLConnection)urls[0].openConnection();
+                conAlertas.setConnectTimeout(15000);
+                conAlertas.setReadTimeout(10000);
+
+                // Obtener el estado del recurso
+                int statusCode = conAlertas.getResponseCode();
+
+                if(statusCode!=200) {
+                    estraviados = new ArrayList<>();
+                    estraviados.add(new Extraviado());
+                } else {
+                    InputStream in = new BufferedInputStream(conAlertas.getInputStream());
+
+                    JsonExtraviadosParser parser = new JsonExtraviadosParser();
+
+                    estraviados = parser.leerFlujoJson(in);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                conAlertas.disconnect();
+            }
+            //System.out.println(estraviados);
+            return estraviados;
+        }
+
+        @Override
+        protected void onPostExecute(List<Extraviado> extraviados) {
+            if(extraviados!=null) {
+                adaptadorAlertas = new adaptadorExtraviados(getActivity().getBaseContext(), extraviados, AlertasFragment.this);
+                listaAlertas.setAdapter(adaptadorAlertas);
+            }else{
+                Toast.makeText(
+                        getActivity().getBaseContext(),
+                        "Ocurrió un error de Parsing Json en Alertas",
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
+            if (progress.isShowing()) { progress.dismiss(); }
+
+        }
+    }
 //
 //    public void cargarMisDenuncias(String filtro){
 //        try {

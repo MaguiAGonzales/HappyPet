@@ -96,7 +96,7 @@ public class DataConnection extends AppCompatActivity {
                         + "&adoptable=0"
                         + "&imagen=" + URLEncoder.encode(encodedImage, "UTF-8")
                         + "&id_usuario=" + this.idUsuario;
-//                System.out.println("datos obtenerdatos -------- >    " + data);
+                System.out.println("datos obtenerdatos -------- >    " + data);
             }
 
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();

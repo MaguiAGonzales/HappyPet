@@ -9,7 +9,7 @@
     android:paddingTop="7dp">
 
     <ImageView
-        android:id="@+id/ivAlertaItem_foto"
+        android:id="@+id/ivExtraviadoItem_foto"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvAlertaItem_titulo"
+                android:id="@+id/tvExtraviadoItem_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -52,7 +52,7 @@
                 android:text="Fecha" />
 
             <TextView
-                android:id="@+id/tvAlertaItem_fecha"
+                android:id="@+id/tvExtraviadoItem_fecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,7 +74,7 @@
                 android:text="Estado :" />
 
             <TextView
-                android:id="@+id/tvAlertaItem_estado"
+                android:id="@+id/tvExtraviadoItem_estado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -94,7 +94,7 @@
                 android:text="Teléfono :" />
 
             <TextView
-                android:id="@+id/tvAlertaItem_telefono"
+                android:id="@+id/tvExtraviadoItem_telefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="976452166"
@@ -102,7 +102,7 @@
                 android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/btnAlertaItem_llamar"
+                android:id="@+id/btnExtraviadoItem_llamar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
@@ -116,7 +116,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvAlertaItem_descripcion"
+                android:id="@+id/tvExtraviadoItem_detalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

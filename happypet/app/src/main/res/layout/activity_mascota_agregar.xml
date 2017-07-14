@@ -106,15 +106,16 @@
                 android:text="Tamaño :" />
 
             <Spinner
-                android:id="@+id/tamano"
+                android:id="@+id/sTamanio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3454.40" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:paddingTop="5dp"
                 android:text="Particularidades :" />
@@ -137,21 +138,6 @@
 
             <EditText
                 android:id="@+id/etSaludMascota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="5dp"
-                android:text="Tamaño :" />
-
-            <EditText
-                android:id="@+id/etTamanioMascota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
