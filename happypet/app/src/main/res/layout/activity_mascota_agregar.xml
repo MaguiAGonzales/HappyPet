@@ -98,6 +98,20 @@
                 tools:layout_editor_absoluteY="175dp" />
 
             <TextView
+                android:id="@+id/textView35"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="5dp"
+                android:text="Tamaño :" />
+
+            <Spinner
+                android:id="@+id/tamano"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3454.40" />
+
+            <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
