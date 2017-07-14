@@ -1,14 +1,44 @@
 package fragmentos;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TabHost;
+import android.widget.Toast;
 
+import com.happypet.movil.happypet.DenunciaAgregarActivity;
 import com.happypet.movil.happypet.R;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import adaptadores.adaptadorDenuncias;
+import adaptadores.adaptadorMisDenuncias;
+import clases.Denuncia;
+import parseadores.JsonDenunciasParser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,13 +54,325 @@ public class AlertasFragment extends Fragment {
         // Required empty public constructor
     }
 
+    String USUARIO_ID;
+    FloatingActionButton fab;
+    TabHost thAlertas;
+
+    String[] tiposDenuncias = {"TODAS", "EXTRAVIADOS", "ENCONTRADOS"};
+    private Spinner cbTipoDenuncias, cbTipoMisDenuncias;
+
+    ProgressDialog progress;
+    ListView listaDenuncias;
+    ArrayAdapter adaptadorDenuncias;
+    HttpURLConnection conDenuncias;
+    private SwipeRefreshLayout swipeContainer;
+
+    ProgressDialog progressMisDenuncias;
+    ListView listaMisDenuncias;
+    ArrayAdapter adaptadorMisDenunciasA;
+    HttpURLConnection conMisDenuncias;
+    private SwipeRefreshLayout swipeContainerMisDenuncias;
+
+
+    private int REQUEST_AgregarDenuncia = 10;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alertas, container, false);
+        View me = inflater.inflate(R.layout.fragment_alertas, container, false);
+
+
+        USUARIO_ID = getArguments().getString("id");
+
+        thAlertas = (TabHost) me.findViewById(R.id.thAlertas);
+        thAlertas.setup();
+
+        TabHost.TabSpec tabDen = thAlertas.newTabSpec("tabAlertas");
+        TabHost.TabSpec tabMisDen = thAlertas.newTabSpec("tabMisAlertas");
+
+        tabDen.setIndicator("ALERTAS");
+        tabDen.setContent(R.id.tabAlertas);
+
+        tabMisDen.setIndicator("MIS ALERTAS");
+        tabMisDen.setContent(R.id.tabMisMisAlertas);
+
+        thAlertas.addTab(tabDen); //añadimos los tabs ya programados
+        thAlertas.addTab(tabMisDen);
+
+        // ----------------------------------------------------------------
+
+        fab = (FloatingActionButton) me.findViewById(R.id.btnAgregarAlerta);
+        fab.hide();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent (view.getContext(), DenunciaAgregarActivity.class );
+//                intent.putExtra("idUsuario", USUARIO_ID);
+//                startActivityForResult(intent, REQUEST_AgregarDenuncia);
+            }
+        });
+
+        thAlertas.setOnTabChangedListener(new TabHost.OnTabChangeListener(){
+            @Override
+            public void onTabChanged(String tabId) {
+                if(tabId.equals("tabAlertas")) {
+                    fab.hide();
+                }
+                if(tabId.equals("tabMisAlertas")) {
+                    fab.show();
+                }
+            }
+        });
+
+        //====================== TAB DENUNCIAS ========================
+        cbTipoDenuncias = (Spinner) me.findViewById(R.id.s_alerta_tipo);
+        cargarTipoDenuncias();
+
+        cbTipoDenuncias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                String  tipoSel=cbTipoDenuncias.getSelectedItem().toString();
+//                cargarDenuncias(tipoSel);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        listaDenuncias = (ListView) me.findViewById(R.id.lvDenuncias);
+
+//        //====================== TAB MIS DENUNCIAS ========================
+        cbTipoMisDenuncias = (Spinner) me.findViewById(R.id.s_mialerta_tipo);
+        cargarTipoMisDenuncias();
+//
+//        cbTipoMisDenuncias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//                String  tipoSel=cbTipoMisDenuncias.getSelectedItem().toString();
+//                cargarMisDenuncias(tipoSel);
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                // TODO Auto-generated method stub
+//            }
+//        });
+//
+//        listaMisDenuncias = (ListView) me.findViewById(R.id.lvMisDenuncias);
+
+        return me;
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_AgregarDenuncia) {
+//            cargarMisDenuncias("");
+        }
+    }
+
+    public void cargarTipoDenuncias(){
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getActivity() , android.R.layout.simple_spinner_dropdown_item, tiposDenuncias );
+        cbTipoDenuncias.setAdapter(ad);
+    }
+    public void cargarTipoMisDenuncias(){
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, tiposDenuncias );
+        cbTipoMisDenuncias.setAdapter(ad);
+    }
+
+
+//    public void cargarDenuncias(String filtro){
+//        try {
+//            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+//
+//            if (networkInfo != null && networkInfo.isConnected()) {
+//                String filtroInicio = "?f=listar";
+//                filtro = filtro.equals("")?"":"&tipo=" + filtro;
+//                String protocolo = "http://";
+//                String ip = getResources().getString(R.string.ipweb);
+//                String puerto = getResources().getString(R.string.puertoweb);
+//                puerto = puerto.equals("") ? "" : ":" + puerto;
+//
+//                String url = protocolo + ip + puerto +  "/happypet-web/funciones/admin_denuncia.php" +filtroInicio + filtro;
+//                System.out.println("direccion ------      " + url);
+//
+//                new JsonTask().execute(new URL(url) );
+//            } else {
+//                Toast.makeText(getActivity(), "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
+//            }
+//
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public class JsonTask extends AsyncTask<URL, Void, List<Denuncia>> {
+//        @Override
+//        protected void onPreExecute() {
+//            progress = ProgressDialog.show(getActivity(), "", "Cargando las Denuncias...");
+//        }
+//
+//        @Override
+//        protected List<Denuncia> doInBackground(URL... urls) {
+//            List<Denuncia> denuncias = null;
+//
+//            try {
+//                // Establecer la conexión
+//                conDenuncias = (HttpURLConnection)urls[0].openConnection();
+//                conDenuncias.setConnectTimeout(15000);
+//                conDenuncias.setReadTimeout(10000);
+//
+//                // Obtener el estado del recurso
+//                int statusCode = conDenuncias.getResponseCode();
+//
+//                if(statusCode!=200) {
+//                    denuncias = new ArrayList<>();
+//                    denuncias.add(new Denuncia());
+//                } else {
+//                    InputStream in = new BufferedInputStream(conDenuncias.getInputStream());
+//
+//                    JsonDenunciasParser parser = new JsonDenunciasParser();
+//
+//                    denuncias = parser.leerFlujoJson(in);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }finally {
+//                conDenuncias.disconnect();
+//            }
+//            //System.out.println(denuncias);
+//            return denuncias;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<Denuncia> denuncias) {
+//            if(denuncias!=null) {
+//                adaptadorDenuncias = new adaptadorDenuncias(getActivity().getBaseContext(), denuncias, DenunciasFragment.this);
+//                listaDenuncias.setAdapter(adaptadorDenuncias);
+//            }else{
+//                Toast.makeText(
+//                        getActivity().getBaseContext(),
+//                        "Ocurrió un error de Parsing Json en Denuncias",
+//                        Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (progress.isShowing()) { progress.dismiss(); }
+//
+//        }
+//    }
+//
+//    public void cargarMisDenuncias(String filtro){
+//        try {
+//            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+//
+//            if (networkInfo != null && networkInfo.isConnected()) {
+//                String filtroInicio = "?f=listar&id=" + USUARIO_ID;
+//                filtro = filtro.equals("")?"":"&tipo=" + filtro;
+//                String protocolo = "http://";
+//                String ip = getResources().getString(R.string.ipweb);
+//                String puerto = getResources().getString(R.string.puertoweb);
+//                puerto = puerto.equals("") ? "" : ":" + puerto;
+//
+//                String url = protocolo + ip + puerto +  "/happypet-web/funciones/admin_denuncia.php" +filtroInicio + filtro;
+//                System.out.println("direccion ------      " + url);
+//
+//                new JsonTaskMisDenuncias().execute(new URL(url) );
+//            } else {
+//                Toast.makeText(getActivity(), "Necesita activar su conexión a la RED…", Toast.LENGTH_LONG).show();
+//            }
+//
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public class JsonTaskMisDenuncias extends AsyncTask<URL, Void, List<Denuncia>> {
+//        @Override
+//        protected void onPreExecute() {
+//            progressMisDenuncias = ProgressDialog.show(getActivity(), "", "Cargando Mis Denuncias...");
+//        }
+//
+//        @Override
+//        protected List<Denuncia> doInBackground(URL... urls) {
+//            List<Denuncia> denuncias = null;
+//
+//            try {
+//                // Establecer la conexión
+//                conMisDenuncias = (HttpURLConnection)urls[0].openConnection();
+//                conMisDenuncias.setConnectTimeout(15000);
+//                conMisDenuncias.setReadTimeout(10000);
+//
+//                // Obtener el estado del recurso
+//                int statusCode = conMisDenuncias.getResponseCode();
+//
+//                if(statusCode!=200) {
+//                    denuncias = new ArrayList<>();
+//                    denuncias.add(new Denuncia());
+//                } else {
+//                    InputStream in = new BufferedInputStream(conMisDenuncias.getInputStream());
+//
+//                    JsonDenunciasParser parser = new JsonDenunciasParser();
+//
+//                    denuncias = parser.leerFlujoJson(in);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }finally {
+//                conDenuncias.disconnect();
+//            }
+//            return denuncias;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<Denuncia> denuncias) {
+//            if(denuncias!=null) {
+//                adaptadorMisDenunciasA = new adaptadorMisDenuncias(getActivity().getBaseContext(), denuncias);
+//                listaMisDenuncias.setAdapter(adaptadorMisDenunciasA);
+//            }else{
+//                Toast.makeText(
+//                        getActivity().getBaseContext(),
+//                        "Ocurrió un error de Parsing Json en Mis Denuncias",
+//                        Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//            if (progressMisDenuncias.isShowing()) { progressMisDenuncias.dismiss(); }
+//
+//        }
+//    }
+
+
+    public void llamar(final String numeroTelefono) {
+//        try{
+//            startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)));
+//        }catch (Exception e){
+//            Toast.makeText(getActivity(), "Ocrrió un problema al intentar llamar al Telefono: " + phoneNumber + ". Inténtelo Ud. mismo de manera manual", Toast.LENGTH_LONG).show();
+//        }
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + numeroTelefono));
+            callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(callIntent);
+        }else{
+            Toast.makeText(getActivity().getBaseContext(), "Active manualmente sus permisos para hacer LLamadas" , Toast.LENGTH_LONG).show();
+            try {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + numeroTelefono));
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(getActivity().getBaseContext(), "No se pudo enviar el número de teléfono para que pueda llamar" , Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -56,16 +398,6 @@ public class AlertasFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
